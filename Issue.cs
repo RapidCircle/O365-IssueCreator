@@ -21,6 +21,8 @@ namespace IssueCreator
         private string[] extensions = new[] { ".jpg", ".jpeg", ".bmp", ".png" };
         private int maxImages;
         private bool deleteOnUpload;
+        private bool WatchFolder;
+        private Configuration configuration;
 
         public Issue()
         {
@@ -31,10 +33,12 @@ namespace IssueCreator
         private void Issue_Load(object sender, EventArgs e)
         {
             notifyIconSQI.Visible = true;
+            configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            path = ConfigurationManager.AppSettings["Path"];
             maxImages = int.Parse(ConfigurationManager.AppSettings["MaxImages"]);
             deleteOnUpload = bool.Parse(ConfigurationManager.AppSettings["DeleteOnUpload"]);
+            WatchFolder = bool.Parse(ConfigurationManager.AppSettings["WatchFolder"]);
+            checkDelete.Checked = deleteOnUpload;
 
             if (!connected)
             {
@@ -42,6 +46,15 @@ namespace IssueCreator
                 connect.ShowDialog();
             }
 
+            linkIssuesList.Tag = ConfigurationManager.AppSettings["Site"] + "/lists/issues";
+            linkSite.Tag = ConfigurationManager.AppSettings["Site"];
+            linkScreenshots.Tag = ConfigurationManager.AppSettings["Path"];
+
+            PopulateDropdownFromField(comboCategory, "Category");
+            PopulateDropdownFromField(comboPriority, "Priority");
+            PopulateDropdownFromField(comboStatus, "Status");
+
+            path = ConfigurationManager.AppSettings["Path"];
             FileSystemWatcher FileSystemWatcher = new FileSystemWatcher();
             FileSystemWatcher.Path = path;
             FileSystemWatcher.IncludeSubdirectories = false;
@@ -49,25 +62,68 @@ namespace IssueCreator
             FileSystemWatcher.SynchronizingObject = this;    
             FileSystemWatcher.Filter = "*.*";
             FileSystemWatcher.Created += FileSystemWatcher_Created;
+            FileSystemWatcher.Deleted += FileSystemWatcher_Deleted;
+            FileSystemWatcher.Changed += FileSystemWatcher_Changed;
+            FileSystemWatcher.Renamed += FileSystemWatcher_Renamed;
             FileSystemWatcher.EnableRaisingEvents = true;
+
+            RefreshPictures();
+        }
+
+        private void PopulateDropdownFromField(ComboBox dropDown, string fieldTitle)
+        {
+            connect.cc.Load(connect.issuesList.Fields);
+            connect.cc.ExecuteQuery();
+            foreach(Field field in connect.issuesList.Fields)
+            {
+                if (field.InternalName.ToLower() == fieldTitle.ToLower())
+                {
+                    FieldChoice fc = field as FieldChoice;
+                    foreach (string choice in fc.Choices)
+                    {
+                        dropDown.Items.Add(choice);
+                    }
+                    return;
+                }
+            }
+        }
+
+        private void FileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
+        {
+            if (!extensions.Any(e.Name.Contains))
+                return;
+
+            RefreshPictures();
+        }
+
+        private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            if (!extensions.Any(e.Name.Contains))
+                return;
+
+            RefreshPictures();
+        }
+
+        private void FileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
+        {
+            if (!extensions.Any(e.Name.Contains))
+                return;
+
+            RefreshPictures();
         }
 
         private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
         {
-            //PictureBoxDisplay pbd = new PictureBoxDisplay();
-            //pbd.Filename = e.Name;
-            //pbd.ImageLocation = e.FullPath;
-            //pbd.Checked = true;
-            //pbd.Click += new EventHandler(picture_Click);
-            //flowPictureLayout.Controls.Add(pbd);
-
             if (!extensions.Any(e.Name.Contains))
                 return;
 
             RefreshPictures();
 
-            WindowState = FormWindowState.Normal;
-            Show();
+            if (WatchFolder)
+            {
+                WindowState = FormWindowState.Normal;
+                Show();
+            }
         }
 
         private void RefreshPictures()
@@ -78,18 +134,23 @@ namespace IssueCreator
             FileInfo[] files = di.GetFiles()
                      .Where(f => extensions.Contains(f.Extension.ToLower()))
                      .OrderBy(f => f.CreationTimeUtc)
-                     //.Skip(1).Take(6)
+                     .Reverse()
                      .Take(maxImages)
+                     //.Reverse()
                      .ToArray();
 
+            int count = 0;
             foreach (var file in files)
             {
+                count++;
                 PictureBoxDisplay pbd = new PictureBoxDisplay();
                 pbd.Filename = file.Name;
                 pbd.ImageLocation = file.FullName;
                 pbd.Click += new EventHandler(picture_Click);
+                if (count == 1) pbd.Checked = true;
                 flowPictureLayout.Controls.Add(pbd);
             }
+
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -133,8 +194,11 @@ namespace IssueCreator
                 connect.cc.Load(att);
                 connect.cc.ExecuteQuery();
 
-                FileInfo fi = new FileInfo(pictures.Value);
-                fi.Delete();
+                if (deleteOnUpload)
+                {
+                    FileInfo fi = new FileInfo(pictures.Value);
+                    fi.Delete();
+                }
             }
         }
 
@@ -150,6 +214,15 @@ namespace IssueCreator
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            if (textTitle.Text == "" && rtbeDescription.RichTextBox.Text == "" &&
+                comboCategory.Text == "" && comboPriority.Text == "" &&  comboStatus.Text == "" &&
+                textComment.Text == "")
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to discard the issue? If not, click 'No' and minimise the form instead.", "Discard issue?", MessageBoxButtons.YesNo);
+                if (result == DialogResult.No)
+                    return;
+            }
+
             ClearForm();
             Hide();
         }
@@ -172,7 +245,29 @@ namespace IssueCreator
 
         private void Issue_Activated(object sender, EventArgs e)
         {
-            RefreshPictures();
+            //RefreshPictures();
+        }
+
+        private void linkIssuesList_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkIssuesList.Tag.ToString());
+        }
+
+        private void linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkSite.Tag.ToString());
+        }
+
+        private void linkScreenshots_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkScreenshots.Tag.ToString());
+        }
+
+        private void checkDelete_CheckedChanged(object sender, EventArgs e)
+        {
+            configuration.AppSettings.Settings["DeleteOnUpload"].Value = checkDelete.Checked.ToString();
+            configuration.Save();
+            ConfigurationManager.RefreshSection("appSettings");
         }
     }
 }

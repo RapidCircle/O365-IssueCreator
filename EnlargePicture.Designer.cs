@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pictureboxEnlarge));
             this.pictureLarge = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLarge)).BeginInit();
             this.SuspendLayout();
@@ -51,6 +52,7 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1138, 963);
             this.Controls.Add(this.pictureLarge);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "pictureboxEnlarge";

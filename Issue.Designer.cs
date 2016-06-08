@@ -47,12 +47,18 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.notifyIconSQI = new System.Windows.Forms.NotifyIcon(this.components);
             this.flowPictureLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkSite = new System.Windows.Forms.LinkLabel();
+            this.linkIssuesList = new System.Windows.Forms.LinkLabel();
+            this.linkScreenshots = new System.Windows.Forms.LinkLabel();
+            this.checkDelete = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(1096, 1132);
+            this.buttonSave.Location = new System.Drawing.Point(1086, 1225);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(186, 61);
             this.buttonSave.TabIndex = 0;
@@ -74,9 +80,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.textTitle);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(53, 360);
+            this.groupBox1.Location = new System.Drawing.Point(42, 454);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1421, 753);
+            this.groupBox1.Size = new System.Drawing.Size(1421, 752);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Issue Details";
@@ -84,7 +90,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(51, 529);
+            this.label6.Location = new System.Drawing.Point(51, 563);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(120, 25);
             this.label6.TabIndex = 12;
@@ -92,7 +98,7 @@
             // 
             // textComment
             // 
-            this.textComment.Location = new System.Drawing.Point(177, 526);
+            this.textComment.Location = new System.Drawing.Point(177, 560);
             this.textComment.Multiline = true;
             this.textComment.Name = "textComment";
             this.textComment.Size = new System.Drawing.Size(1169, 166);
@@ -101,11 +107,7 @@
             // comboCategory
             // 
             this.comboCategory.FormattingEnabled = true;
-            this.comboCategory.Items.AddRange(new object[] {
-            "(1) Category1",
-            "(2) Category2",
-            "(3) Category3"});
-            this.comboCategory.Location = new System.Drawing.Point(177, 486);
+            this.comboCategory.Location = new System.Drawing.Point(177, 511);
             this.comboCategory.Name = "comboCategory";
             this.comboCategory.Size = new System.Drawing.Size(427, 33);
             this.comboCategory.TabIndex = 10;
@@ -113,7 +115,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(66, 490);
+            this.label5.Location = new System.Drawing.Point(66, 515);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(105, 25);
             this.label5.TabIndex = 9;
@@ -124,7 +126,7 @@
             this.rtbeDescription.AcceptsTab = false;
             this.rtbeDescription.AutoWordSelection = true;
             this.rtbeDescription.DetectURLs = true;
-            this.rtbeDescription.Location = new System.Drawing.Point(177, 216);
+            this.rtbeDescription.Location = new System.Drawing.Point(178, 230);
             this.rtbeDescription.Name = "rtbeDescription";
             this.rtbeDescription.ReadOnly = false;
             // 
@@ -175,7 +177,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(45, 216);
+            this.label4.Location = new System.Drawing.Point(45, 247);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(126, 25);
             this.label4.TabIndex = 6;
@@ -184,19 +186,15 @@
             // comboPriority
             // 
             this.comboPriority.FormattingEnabled = true;
-            this.comboPriority.Items.AddRange(new object[] {
-            "(1) High",
-            "(2) Normal",
-            "(3) Low"});
-            this.comboPriority.Location = new System.Drawing.Point(178, 160);
+            this.comboPriority.Location = new System.Drawing.Point(178, 172);
             this.comboPriority.Name = "comboPriority";
-            this.comboPriority.Size = new System.Drawing.Size(425, 33);
+            this.comboPriority.Size = new System.Drawing.Size(426, 33);
             this.comboPriority.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(86, 168);
+            this.label3.Location = new System.Drawing.Point(86, 180);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 25);
             this.label3.TabIndex = 4;
@@ -205,11 +203,7 @@
             // comboStatus
             // 
             this.comboStatus.FormattingEnabled = true;
-            this.comboStatus.Items.AddRange(new object[] {
-            "Active",
-            "Resolved",
-            "Closed"});
-            this.comboStatus.Location = new System.Drawing.Point(178, 120);
+            this.comboStatus.Location = new System.Drawing.Point(178, 123);
             this.comboStatus.Name = "comboStatus";
             this.comboStatus.Size = new System.Drawing.Size(426, 33);
             this.comboStatus.TabIndex = 3;
@@ -217,7 +211,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(92, 128);
+            this.label2.Location = new System.Drawing.Point(92, 131);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 25);
             this.label2.TabIndex = 2;
@@ -242,7 +236,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(1288, 1132);
+            this.buttonCancel.Location = new System.Drawing.Point(1278, 1225);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(186, 61);
             this.buttonCancel.TabIndex = 2;
@@ -260,21 +254,88 @@
             // flowPictureLayout
             // 
             this.flowPictureLayout.AutoScroll = true;
-            this.flowPictureLayout.Location = new System.Drawing.Point(99, 12);
+            this.flowPictureLayout.Location = new System.Drawing.Point(71, 42);
             this.flowPictureLayout.Name = "flowPictureLayout";
             this.flowPictureLayout.Size = new System.Drawing.Size(1300, 300);
             this.flowPictureLayout.TabIndex = 3;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.flowPictureLayout);
+            this.groupBox2.Location = new System.Drawing.Point(42, 67);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(1422, 366);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Screenshots";
+            // 
+            // linkSite
+            // 
+            this.linkSite.AutoSize = true;
+            this.linkSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkSite.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkSite.Location = new System.Drawing.Point(1326, 24);
+            this.linkSite.Name = "linkSite";
+            this.linkSite.Size = new System.Drawing.Size(137, 29);
+            this.linkSite.TabIndex = 6;
+            this.linkSite.TabStop = true;
+            this.linkSite.Text = "Project Site";
+            this.linkSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSite_LinkClicked);
+            // 
+            // linkIssuesList
+            // 
+            this.linkIssuesList.AutoSize = true;
+            this.linkIssuesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkIssuesList.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkIssuesList.Location = new System.Drawing.Point(1171, 24);
+            this.linkIssuesList.Name = "linkIssuesList";
+            this.linkIssuesList.Size = new System.Drawing.Size(125, 29);
+            this.linkIssuesList.TabIndex = 5;
+            this.linkIssuesList.TabStop = true;
+            this.linkIssuesList.Text = "Issues List";
+            this.linkIssuesList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIssuesList_LinkClicked);
+            // 
+            // linkScreenshots
+            // 
+            this.linkScreenshots.AutoSize = true;
+            this.linkScreenshots.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkScreenshots.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkScreenshots.Location = new System.Drawing.Point(989, 24);
+            this.linkScreenshots.Name = "linkScreenshots";
+            this.linkScreenshots.Size = new System.Drawing.Size(147, 29);
+            this.linkScreenshots.TabIndex = 7;
+            this.linkScreenshots.TabStop = true;
+            this.linkScreenshots.Text = "Screenshots";
+            this.linkScreenshots.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkScreenshots_LinkClicked);
+            // 
+            // checkDelete
+            // 
+            this.checkDelete.AutoSize = true;
+            this.checkDelete.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.checkDelete.Location = new System.Drawing.Point(695, 1242);
+            this.checkDelete.Name = "checkDelete";
+            this.checkDelete.Size = new System.Drawing.Size(361, 29);
+            this.checkDelete.TabIndex = 8;
+            this.checkDelete.Text = "Delete screenshots after upload?";
+            this.checkDelete.UseVisualStyleBackColor = true;
+            this.checkDelete.CheckedChanged += new System.EventHandler(this.checkDelete_CheckedChanged);
             // 
             // Issue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1495, 1223);
-            this.Controls.Add(this.flowPictureLayout);
+            this.ClientSize = new System.Drawing.Size(1495, 1301);
+            this.Controls.Add(this.checkDelete);
+            this.Controls.Add(this.linkScreenshots);
+            this.Controls.Add(this.linkSite);
+            this.Controls.Add(this.linkIssuesList);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonSave);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "Issue";
             this.ShowInTaskbar = false;
             this.Text = "Issue";
@@ -283,7 +344,9 @@
             this.Load += new System.EventHandler(this.Issue_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -306,5 +369,10 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.NotifyIcon notifyIconSQI;
         private System.Windows.Forms.FlowLayoutPanel flowPictureLayout;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.LinkLabel linkSite;
+        private System.Windows.Forms.LinkLabel linkIssuesList;
+        private System.Windows.Forms.LinkLabel linkScreenshots;
+        private System.Windows.Forms.CheckBox checkDelete;
     }
 }
