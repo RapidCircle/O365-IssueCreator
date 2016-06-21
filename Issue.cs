@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Microsoft.SharePoint.Client;
+using Squirrel;
+using Microsoft.SharePoint.Client.WebParts;
 
 namespace IssueCreator
 {
@@ -19,10 +21,11 @@ namespace IssueCreator
         private Connect connect;
         private string path;
         private string[] extensions = new[] { ".jpg", ".jpeg", ".bmp", ".png" };
+
         private int maxImages;
         private bool deleteOnUpload;
         private bool WatchFolder;
-        private Configuration configuration;
+        //private Configuration configuration;
 
         public Issue()
         {
@@ -33,7 +36,7 @@ namespace IssueCreator
         private void Issue_Load(object sender, EventArgs e)
         {
             notifyIconSQI.Visible = true;
-            configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //connect.configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             maxImages = int.Parse(ConfigurationManager.AppSettings["MaxImages"]);
             deleteOnUpload = bool.Parse(ConfigurationManager.AppSettings["DeleteOnUpload"]);
@@ -53,6 +56,8 @@ namespace IssueCreator
             PopulateDropdownFromField(comboCategory, "Category");
             PopulateDropdownFromField(comboPriority, "Priority");
             PopulateDropdownFromField(comboStatus, "Status");
+            comboAssigned.DisplayMember = "Display";
+            PopulateUsersInAssignedTo(comboAssigned);
 
             path = ConfigurationManager.AppSettings["Path"];
             FileSystemWatcher FileSystemWatcher = new FileSystemWatcher();
@@ -68,6 +73,31 @@ namespace IssueCreator
             FileSystemWatcher.EnableRaisingEvents = true;
 
             RefreshPictures();
+
+            //Check if the custom issues web part is deployed.
+            Microsoft.SharePoint.Client.File issuesDisplayForm = connect.issuesList.RootFolder.Files.GetByUrl("DispForm.aspx");
+            LimitedWebPartManager limitedWebPartManager = issuesDisplayForm.GetLimitedWebPartManager(PersonalizationScope.Shared);
+            connect.cc.Load(limitedWebPartManager,
+                                    wpm => wpm.WebParts,
+                                    wpm => wpm.WebParts.Include(wp => wp.WebPart.Title));
+            connect.cc.ExecuteQuery();
+
+            foreach (WebPartDefinition wp in limitedWebPartManager.WebParts)
+            {
+                if (wp.WebPart.Title == "IssuesCreator")
+                {
+                    linkConfigureIssueForm.Visible = false;
+                    break;
+                }
+                else
+                    linkConfigureIssueForm.Visible = true;
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            connect.configuration.Save();
+            base.OnClosed(e);
         }
 
         private void PopulateDropdownFromField(ComboBox dropDown, string fieldTitle)
@@ -85,6 +115,24 @@ namespace IssueCreator
                     }
                     return;
                 }
+            }
+        }
+
+        private void PopulateUsersInAssignedTo(ComboBox dropDown)
+        {
+            var siteUsers = from user in connect.uploadWeb.SiteUsers
+                            where user.PrincipalType == Microsoft.SharePoint.Client.Utilities.PrincipalType.User
+                            select user;
+            var usersResult = connect.cc.LoadQuery(siteUsers);
+            connect.cc.ExecuteQuery();
+
+            foreach (var user in usersResult)
+            {
+                AssignedTo at = new AssignedTo();
+                at.Email = user.Email;
+                at.ID = user.Id;
+                at.Name = user.Title;
+                comboAssigned.Items.Add(at);
             }
         }
 
@@ -136,7 +184,6 @@ namespace IssueCreator
                      .OrderBy(f => f.CreationTimeUtc)
                      .Reverse()
                      .Take(maxImages)
-                     //.Reverse()
                      .ToArray();
 
             int count = 0;
@@ -164,6 +211,13 @@ namespace IssueCreator
             li["Priority"] = comboPriority.Text;
             li["Category"] = comboCategory.Text;
             li["V3Comments"] = textComment.Text;
+            if (!string.IsNullOrEmpty(comboAssigned.SelectedText))
+            {
+                FieldUserValue uv = new FieldUserValue();
+                AssignedTo selected = (AssignedTo)comboAssigned.SelectedItem;
+                uv.LookupId = selected.ID;
+                li["AssignedTo"] = uv;
+            }
             li.Update();
             connect.cc.ExecuteQuery();
 
@@ -265,10 +319,85 @@ namespace IssueCreator
 
         private void checkDelete_CheckedChanged(object sender, EventArgs e)
         {
-            configuration.AppSettings.Settings["DeleteOnUpload"].Value = checkDelete.Checked.ToString();
-            configuration.Save();
-            ConfigurationManager.RefreshSection("appSettings");
+            connect.configuration.AppSettings.Settings["DeleteOnUpload"].Value = checkDelete.Checked.ToString();
+        }
+
+
+        internal void OnAppUpdate(Version obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OnInitialInstall(Version obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void OnAppUninstall(Version obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateApp()
+        {
+            using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/myuser/myapp"))
+            {
+                await mgr.Result.CheckForUpdate();
+                await mgr.Result.UpdateApp();
+                MessageBox.Show("The application has been updated - please close and restart.");
+            }
+        }
+
+
+        private class AssignedTo
+        {
+            public string Name { get; set; }
+            public string Email { get; set; }
+            public int ID { get; set; }
+
+            public string Display
+            {
+                get { return Name + " (" + Email + ")"; }
+            }
+        }
+
+        private void linkAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            frmAboutBox ab = new frmAboutBox();
+            ab.ShowDialog();
+        }
+
+        private void linkConfigureIssueForm_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("This command will replace the default Issue display form with one that can display screenshots next to the issue description. Do you wish to continue?", "Replace default Issue Display form?", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.No)
+                return;
+
+            string displayFormSource = System.IO.File.ReadAllText("Issues_DispForm.txt");
+            displayFormSource = displayFormSource.Replace("##LISTID##", connect.issuesList.Id.ToString());
+
+            FileCreationInformation displayForm = new FileCreationInformation();
+            displayForm.Url = "DispForm.aspx";
+            displayForm.Content = Encoding.UTF8.GetBytes(displayFormSource);
+            displayForm.Overwrite = true;
+            Microsoft.SharePoint.Client.File issuesDisplayForm = connect.issuesList.RootFolder.Files.Add(displayForm);
+            connect.cc.ExecuteQuery();
+
+            LimitedWebPartManager limitedWebPartManager = issuesDisplayForm.GetLimitedWebPartManager(PersonalizationScope.Shared);
+            connect.cc.Load(limitedWebPartManager.WebParts);
+            connect.cc.ExecuteQuery();
+
+            string webPartFileDefinition = System.IO.File.ReadAllText("Attachments.dwp");
+            WebPartDefinition webPartImported = limitedWebPartManager.ImportWebPart(webPartFileDefinition);
+
+            WebPartDefinition webPart = limitedWebPartManager.AddWebPart(webPartImported.WebPart, "MainRight", 0);
+            connect.cc.Load(webPart, d => d.Id);
+            connect.cc.ExecuteQuery();
+            MessageBox.Show("Screenshots have been successfully added to your Issues List");
+            linkConfigureIssueForm.Visible = false;
         }
     }
+
 }
 

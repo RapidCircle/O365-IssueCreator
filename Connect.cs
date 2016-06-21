@@ -25,7 +25,7 @@ namespace IssueCreator
         public Site uploadSite;
         public List issuesList;
         public bool connected = false;
-        private Configuration configuration;
+        public Configuration configuration;
 
 
         public Connect()
@@ -40,6 +40,7 @@ namespace IssueCreator
             textFolder.Text = ConfigurationManager.AppSettings["Path"];
             linkIssuesList.Tag = ConfigurationManager.AppSettings["Site"] + "/lists/issues";
             linkSite.Tag = ConfigurationManager.AppSettings["Site"];
+            
             FormState();
         }
 
@@ -107,8 +108,6 @@ namespace IssueCreator
                 textFolder.Text = folderBrowserDialog1.SelectedPath;
 
                 configuration.AppSettings.Settings["Path"].Value = folderBrowserDialog1.SelectedPath;
-                configuration.Save();
-                ConfigurationManager.RefreshSection("appSettings");
                 FormState();
             }
         }

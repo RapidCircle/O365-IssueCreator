@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Issue));
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboAssigned = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textComment = new System.Windows.Forms.TextBox();
             this.comboCategory = new System.Windows.Forms.ComboBox();
@@ -52,6 +54,8 @@
             this.linkIssuesList = new System.Windows.Forms.LinkLabel();
             this.linkScreenshots = new System.Windows.Forms.LinkLabel();
             this.checkDelete = new System.Windows.Forms.CheckBox();
+            this.linkAbout = new System.Windows.Forms.LinkLabel();
+            this.linkConfigureIssueForm = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +72,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.comboAssigned);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textComment);
             this.groupBox1.Controls.Add(this.comboCategory);
@@ -86,6 +92,23 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Issue Details";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(64, 79);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(107, 25);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Assigned:";
+            // 
+            // comboAssigned
+            // 
+            this.comboAssigned.FormattingEnabled = true;
+            this.comboAssigned.Location = new System.Drawing.Point(177, 76);
+            this.comboAssigned.Name = "comboAssigned";
+            this.comboAssigned.Size = new System.Drawing.Size(713, 33);
+            this.comboAssigned.TabIndex = 13;
             // 
             // label6
             // 
@@ -219,7 +242,7 @@
             // 
             // textTitle
             // 
-            this.textTitle.Location = new System.Drawing.Point(177, 38);
+            this.textTitle.Location = new System.Drawing.Point(177, 30);
             this.textTitle.MaxLength = 255;
             this.textTitle.Name = "textTitle";
             this.textTitle.Size = new System.Drawing.Size(1169, 31);
@@ -228,7 +251,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(112, 44);
+            this.label1.Location = new System.Drawing.Point(112, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(59, 25);
             this.label1.TabIndex = 0;
@@ -274,7 +297,7 @@
             this.linkSite.AutoSize = true;
             this.linkSite.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkSite.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkSite.Location = new System.Drawing.Point(1326, 24);
+            this.linkSite.Location = new System.Drawing.Point(1222, 24);
             this.linkSite.Name = "linkSite";
             this.linkSite.Size = new System.Drawing.Size(137, 29);
             this.linkSite.TabIndex = 6;
@@ -287,7 +310,7 @@
             this.linkIssuesList.AutoSize = true;
             this.linkIssuesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkIssuesList.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkIssuesList.Location = new System.Drawing.Point(1171, 24);
+            this.linkIssuesList.Location = new System.Drawing.Point(1067, 24);
             this.linkIssuesList.Name = "linkIssuesList";
             this.linkIssuesList.Size = new System.Drawing.Size(125, 29);
             this.linkIssuesList.TabIndex = 5;
@@ -300,7 +323,7 @@
             this.linkScreenshots.AutoSize = true;
             this.linkScreenshots.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkScreenshots.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkScreenshots.Location = new System.Drawing.Point(989, 24);
+            this.linkScreenshots.Location = new System.Drawing.Point(885, 24);
             this.linkScreenshots.Name = "linkScreenshots";
             this.linkScreenshots.Size = new System.Drawing.Size(147, 29);
             this.linkScreenshots.TabIndex = 7;
@@ -320,12 +343,41 @@
             this.checkDelete.UseVisualStyleBackColor = true;
             this.checkDelete.CheckedChanged += new System.EventHandler(this.checkDelete_CheckedChanged);
             // 
+            // linkAbout
+            // 
+            this.linkAbout.AutoSize = true;
+            this.linkAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkAbout.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkAbout.Location = new System.Drawing.Point(1388, 24);
+            this.linkAbout.Name = "linkAbout";
+            this.linkAbout.Size = new System.Drawing.Size(75, 29);
+            this.linkAbout.TabIndex = 9;
+            this.linkAbout.TabStop = true;
+            this.linkAbout.Text = "About";
+            this.linkAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkAbout_LinkClicked);
+            // 
+            // linkConfigureIssueForm
+            // 
+            this.linkConfigureIssueForm.AutoSize = true;
+            this.linkConfigureIssueForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkConfigureIssueForm.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkConfigureIssueForm.Location = new System.Drawing.Point(37, 24);
+            this.linkConfigureIssueForm.Name = "linkConfigureIssueForm";
+            this.linkConfigureIssueForm.Size = new System.Drawing.Size(475, 29);
+            this.linkConfigureIssueForm.TabIndex = 10;
+            this.linkConfigureIssueForm.TabStop = true;
+            this.linkConfigureIssueForm.Text = "Configure Issue List Screenshot Extensions";
+            this.linkConfigureIssueForm.Visible = false;
+            this.linkConfigureIssueForm.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkConfigureIssueForm_LinkClicked);
+            // 
             // Issue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1495, 1301);
+            this.Controls.Add(this.linkConfigureIssueForm);
+            this.Controls.Add(this.linkAbout);
             this.Controls.Add(this.checkDelete);
             this.Controls.Add(this.linkScreenshots);
             this.Controls.Add(this.linkSite);
@@ -374,5 +426,9 @@
         private System.Windows.Forms.LinkLabel linkIssuesList;
         private System.Windows.Forms.LinkLabel linkScreenshots;
         private System.Windows.Forms.CheckBox checkDelete;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboAssigned;
+        private System.Windows.Forms.LinkLabel linkAbout;
+        private System.Windows.Forms.LinkLabel linkConfigureIssueForm;
     }
 }

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Squirrel;
 
 namespace IssueCreator
 {
@@ -21,6 +22,11 @@ namespace IssueCreator
             Application.SetCompatibleTextRenderingDefault(false);
 
             Issue issue = new Issue();
+
+            SquirrelAwareApp.HandleEvents(onAppUpdate: issue.OnAppUpdate,
+                        onAppUninstall: issue.OnAppUninstall,
+                        onInitialInstall: issue.OnInitialInstall);
+
             Application.Run(issue);
 
             //Application.Run(new Form1());

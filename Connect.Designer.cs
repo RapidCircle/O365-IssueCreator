@@ -30,19 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Connect));
             this.grpSharePoint = new System.Windows.Forms.GroupBox();
-            this.buttonConnect = new System.Windows.Forms.Button();
+            this.buttonBrowse = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textFolder = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textUsername = new System.Windows.Forms.TextBox();
+            this.buttonConnect = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.textFolder = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.buttonBrowse = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.linkIssuesList = new System.Windows.Forms.LinkLabel();
             this.linkSite = new System.Windows.Forms.LinkLabel();
+            this.linkIssuesList = new System.Windows.Forms.LinkLabel();
             this.grpSharePoint.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -63,16 +63,33 @@
             this.grpSharePoint.TabStop = false;
             this.grpSharePoint.Text = "Issue Creator";
             // 
-            // buttonConnect
+            // buttonBrowse
             // 
-            this.buttonConnect.Enabled = false;
-            this.buttonConnect.Location = new System.Drawing.Point(387, 357);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(182, 66);
-            this.buttonConnect.TabIndex = 6;
-            this.buttonConnect.Text = "Connect";
-            this.buttonConnect.UseVisualStyleBackColor = true;
-            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
+            this.buttonBrowse.Location = new System.Drawing.Point(658, 133);
+            this.buttonBrowse.Name = "buttonBrowse";
+            this.buttonBrowse.Size = new System.Drawing.Size(58, 43);
+            this.buttonBrowse.TabIndex = 9;
+            this.buttonBrowse.Text = "...";
+            this.buttonBrowse.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonBrowse.UseVisualStyleBackColor = true;
+            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(51, 138);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 25);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Folder:";
+            // 
+            // textFolder
+            // 
+            this.textFolder.Location = new System.Drawing.Point(136, 135);
+            this.textFolder.Name = "textFolder";
+            this.textFolder.ReadOnly = true;
+            this.textFolder.Size = new System.Drawing.Size(516, 31);
+            this.textFolder.TabIndex = 7;
             // 
             // label3
             // 
@@ -111,22 +128,16 @@
             this.textUsername.TextChanged += new System.EventHandler(this.textUsername_TextChanged);
             this.textUsername.Leave += new System.EventHandler(this.textUsername_Leave);
             // 
-            // textFolder
+            // buttonConnect
             // 
-            this.textFolder.Location = new System.Drawing.Point(136, 135);
-            this.textFolder.Name = "textFolder";
-            this.textFolder.ReadOnly = true;
-            this.textFolder.Size = new System.Drawing.Size(516, 31);
-            this.textFolder.TabIndex = 7;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(51, 138);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(79, 25);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Folder:";
+            this.buttonConnect.Enabled = false;
+            this.buttonConnect.Location = new System.Drawing.Point(387, 357);
+            this.buttonConnect.Name = "buttonConnect";
+            this.buttonConnect.Size = new System.Drawing.Size(182, 66);
+            this.buttonConnect.TabIndex = 6;
+            this.buttonConnect.Text = "Connect";
+            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
             // buttonCancel
             // 
@@ -138,17 +149,6 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // buttonBrowse
-            // 
-            this.buttonBrowse.Location = new System.Drawing.Point(658, 133);
-            this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(58, 43);
-            this.buttonBrowse.TabIndex = 9;
-            this.buttonBrowse.Text = "...";
-            this.buttonBrowse.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonBrowse.UseVisualStyleBackColor = true;
-            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.linkSite);
@@ -159,19 +159,6 @@
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "SharePoint Details";
-            // 
-            // linkIssuesList
-            // 
-            this.linkIssuesList.AutoSize = true;
-            this.linkIssuesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkIssuesList.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkIssuesList.Location = new System.Drawing.Point(203, 47);
-            this.linkIssuesList.Name = "linkIssuesList";
-            this.linkIssuesList.Size = new System.Drawing.Size(125, 29);
-            this.linkIssuesList.TabIndex = 0;
-            this.linkIssuesList.TabStop = true;
-            this.linkIssuesList.Text = "Issues List";
-            this.linkIssuesList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIssuesList_LinkClicked);
             // 
             // linkSite
             // 
@@ -186,8 +173,22 @@
             this.linkSite.Text = "Project Site";
             this.linkSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSite_LinkClicked);
             // 
+            // linkIssuesList
+            // 
+            this.linkIssuesList.AutoSize = true;
+            this.linkIssuesList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkIssuesList.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.linkIssuesList.Location = new System.Drawing.Point(203, 47);
+            this.linkIssuesList.Name = "linkIssuesList";
+            this.linkIssuesList.Size = new System.Drawing.Size(125, 29);
+            this.linkIssuesList.TabIndex = 0;
+            this.linkIssuesList.TabStop = true;
+            this.linkIssuesList.Text = "Issues List";
+            this.linkIssuesList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkIssuesList_LinkClicked);
+            // 
             // Connect
             // 
+            this.AcceptButton = this.buttonConnect;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
