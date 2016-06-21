@@ -25,7 +25,6 @@ namespace IssueCreator
         private int maxImages;
         private bool deleteOnUpload;
         private bool WatchFolder;
-        //private Configuration configuration;
 
         public Issue()
         {
@@ -36,7 +35,6 @@ namespace IssueCreator
         private void Issue_Load(object sender, EventArgs e)
         {
             notifyIconSQI.Visible = true;
-            //connect.configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
             maxImages = int.Parse(ConfigurationManager.AppSettings["MaxImages"]);
             deleteOnUpload = bool.Parse(ConfigurationManager.AppSettings["DeleteOnUpload"]);

@@ -28,8 +28,6 @@ namespace IssueCreator
                         onInitialInstall: issue.OnInitialInstall);
 
             Application.Run(issue);
-
-            //Application.Run(new Form1());
         }
 
     }
