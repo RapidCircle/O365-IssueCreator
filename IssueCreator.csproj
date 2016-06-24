@@ -161,7 +161,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RichTextBoxExtended">
-      <HintPath>..\..\..\Downloads\RichTextBoxExtended\RichTextBoxExtended\bin\Debug\RichTextBoxExtended.dll</HintPath>
+      <HintPath>libs\RichTextBoxExtended.dll</HintPath>
     </Reference>
     <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Splat.1.6.2\lib\Net45\Splat.dll</HintPath>

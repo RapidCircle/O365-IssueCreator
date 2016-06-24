@@ -114,7 +114,7 @@ namespace IssueCreator
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Environment.Exit(0);
         }
 
         private void FormState()
