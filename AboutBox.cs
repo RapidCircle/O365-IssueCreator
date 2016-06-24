@@ -101,5 +101,10 @@ namespace IssueCreator
             }
         }
         #endregion
+
+        private void frmAboutBox_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

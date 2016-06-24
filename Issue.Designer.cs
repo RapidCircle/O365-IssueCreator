@@ -56,6 +56,7 @@
             this.checkDelete = new System.Windows.Forms.CheckBox();
             this.linkAbout = new System.Windows.Forms.LinkLabel();
             this.linkConfigureIssueForm = new System.Windows.Forms.LinkLabel();
+            this.linkUpgrade = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -361,7 +362,7 @@
             this.linkConfigureIssueForm.AutoSize = true;
             this.linkConfigureIssueForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkConfigureIssueForm.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkConfigureIssueForm.Location = new System.Drawing.Point(37, 24);
+            this.linkConfigureIssueForm.Location = new System.Drawing.Point(37, 1242);
             this.linkConfigureIssueForm.Name = "linkConfigureIssueForm";
             this.linkConfigureIssueForm.Size = new System.Drawing.Size(475, 29);
             this.linkConfigureIssueForm.TabIndex = 10;
@@ -370,12 +371,22 @@
             this.linkConfigureIssueForm.Visible = false;
             this.linkConfigureIssueForm.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkConfigureIssueForm_LinkClicked);
             // 
+            // linkUpgrade
+            // 
+            this.linkUpgrade.AutoSize = true;
+            this.linkUpgrade.Location = new System.Drawing.Point(42, 27);
+            this.linkUpgrade.Name = "linkUpgrade";
+            this.linkUpgrade.Size = new System.Drawing.Size(0, 25);
+            this.linkUpgrade.TabIndex = 11;
+            this.linkUpgrade.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUpgrade_LinkClicked);
+            // 
             // Issue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1495, 1301);
+            this.Controls.Add(this.linkUpgrade);
             this.Controls.Add(this.linkConfigureIssueForm);
             this.Controls.Add(this.linkAbout);
             this.Controls.Add(this.checkDelete);
@@ -430,5 +441,6 @@
         private System.Windows.Forms.ComboBox comboAssigned;
         private System.Windows.Forms.LinkLabel linkAbout;
         private System.Windows.Forms.LinkLabel linkConfigureIssueForm;
+        private System.Windows.Forms.LinkLabel linkUpgrade;
     }
 }

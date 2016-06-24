@@ -244,7 +244,6 @@
     <None Include="Attachments.dwp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="IssueCreator_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -286,4 +285,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
+  <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+    <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
+  </GetAssemblyIdentity>
+  <Exec Command="nuget pack SharePointIssueCreator.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory nuget_packs -BasePath $(OutDir)" />
+  <Exec Command="packages\squirrel.windows.1.4.0\tools\squirrel --releasify nuget_packs\SharePointIssueCreator.%(myAssemblyInfo.Version).nupkg" />
+</Target>
 </Project>

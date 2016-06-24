@@ -12,6 +12,7 @@ using System.IO;
 using Microsoft.SharePoint.Client;
 using Squirrel;
 using Microsoft.SharePoint.Client.WebParts;
+using System.Reflection;
 
 namespace IssueCreator
 {
@@ -25,6 +26,7 @@ namespace IssueCreator
         private int maxImages;
         private bool deleteOnUpload;
         private bool WatchFolder;
+        static bool ShowTheWelcomeWizard;
 
         public Issue()
         {
@@ -90,6 +92,7 @@ namespace IssueCreator
                 else
                     linkConfigureIssueForm.Visible = true;
             }
+            UpdateApp();
         }
 
         protected override void OnClosed(EventArgs e)
@@ -321,28 +324,72 @@ namespace IssueCreator
         }
 
 
-        internal void OnAppUpdate(Version obj)
+        internal async void OnAppUpdate(Version obj)
         {
-            throw new NotImplementedException();
-        }
-
-        internal void OnInitialInstall(Version obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void OnAppUninstall(Version obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task UpdateApp()
-        {
-            using (var mgr = UpdateManager.GitHubUpdateManager("https://github.com/myuser/myapp"))
+            using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/RapidCircle/O365-IssueCreator"))
             {
-                await mgr.Result.CheckForUpdate();
-                await mgr.Result.UpdateApp();
-                MessageBox.Show("The application has been updated - please close and restart.");
+                mgr.CreateShortcutForThisExe();
+                mgr.CreateUninstallerRegistryEntry();
+            }
+        }
+
+        internal async void OnInitialInstall(Version obj)
+        {
+            using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/RapidCircle/O365-IssueCreator"))
+            {
+                mgr.CreateShortcutForThisExe();
+                mgr.CreateUninstallerRegistryEntry();
+            }
+        }
+
+        internal async void OnAppUninstall(Version obj)
+        {
+            using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/RapidCircle/O365-IssueCreator"))
+            {
+                mgr.RemoveShortcutForThisExe();
+            }
+        }
+
+        internal void OnFirstRun()
+        {
+            ShowTheWelcomeWizard = true;
+        }
+
+        private async void UpdateApp()
+        {
+            try
+            {
+                using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/RapidCircle/O365-IssueCreator"))
+                {
+                    var upgrade = await mgr.CheckForUpdate();
+                    if (upgrade.ReleasesToApply.Any())
+                    {
+                        linkUpgrade.Text = "New version released. Upgrading...";
+                        linkUpgrade.Enabled = false;
+                        linkUpgrade.LinkBehavior = LinkBehavior.NeverUnderline;
+                    }
+                    else
+                    {
+                        linkUpgrade.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                        linkUpgrade.Enabled = false;
+                        linkUpgrade.LinkBehavior = LinkBehavior.NeverUnderline;
+                        return;
+                    }
+
+
+                    var release = await mgr.UpdateApp();
+
+                    linkUpgrade.Text = "Upgraded. Click to restart.";
+                    linkUpgrade.Enabled = true;
+                    linkUpgrade.LinkBehavior = LinkBehavior.HoverUnderline;
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message + Environment.NewLine;
+                if (ex.InnerException != null)
+                    message += ex.InnerException.Message;
+                MessageBox.Show(message);
             }
         }
 
@@ -394,6 +441,11 @@ namespace IssueCreator
             connect.cc.ExecuteQuery();
             MessageBox.Show("Screenshots have been successfully added to your Issues List");
             linkConfigureIssueForm.Visible = false;
+        }
+
+        private void linkUpgrade_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            UpdateManager.RestartApp();
         }
     }
 

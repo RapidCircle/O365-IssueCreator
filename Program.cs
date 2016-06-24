@@ -25,7 +25,8 @@ namespace IssueCreator
 
             SquirrelAwareApp.HandleEvents(onAppUpdate: issue.OnAppUpdate,
                         onAppUninstall: issue.OnAppUninstall,
-                        onInitialInstall: issue.OnInitialInstall);
+                        onInitialInstall: issue.OnInitialInstall,
+                        onFirstRun: issue.OnFirstRun);
 
             Application.Run(issue);
         }
