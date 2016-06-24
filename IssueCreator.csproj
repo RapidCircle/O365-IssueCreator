@@ -245,15 +245,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -286,10 +277,10 @@
   </Target>
   -->
   <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release'">
-  <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-    <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo"/>
-  </GetAssemblyIdentity>
-  <Exec Command="nuget pack SharePointIssueCreator.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory nuget_packs -BasePath $(OutDir)" />
-  <Exec Command="packages\squirrel.windows.1.4.0\tools\squirrel --releasify nuget_packs\SharePointIssueCreator.%(myAssemblyInfo.Version).nupkg" />
-</Target>
+    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
+      <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
+    </GetAssemblyIdentity>
+    <Exec Command="nuget pack SharePointIssueCreator.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory nuget_packs -BasePath $(OutDir)" />
+    <Exec Command="packages\squirrel.windows.1.4.0\tools\squirrel --releasify nuget_packs\SharePointIssueCreator.%(myAssemblyInfo.Version).nupkg" />
+  </Target>
 </Project>

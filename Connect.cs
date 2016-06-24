@@ -31,15 +31,20 @@ namespace IssueCreator
         public Connect()
         {
             InitializeComponent();
-            configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textUsername.Text = ConfigurationManager.AppSettings["Username"];
-            textFolder.Text = ConfigurationManager.AppSettings["Path"];
-            linkIssuesList.Tag = ConfigurationManager.AppSettings["Site"] + "/lists/issues";
-            linkSite.Tag = ConfigurationManager.AppSettings["Site"];
+            textUsername.Text = username;
+            textFolder.Text = path;
+            linkIssuesList.Tag = site + "/lists/issues";
+            linkSite.Tag = site;
+
+            if (password.Length > 0)
+            {
+                textPassword.Text = "xxxxxxxxxxxxx";
+                textPassword.Enabled = false;
+            }
             
             FormState();
         }
@@ -49,12 +54,12 @@ namespace IssueCreator
             if (!string.IsNullOrEmpty(textPassword.Text) && !string.IsNullOrEmpty(textUsername.Text) && !string.IsNullOrEmpty(textFolder.Text))
             {
                 username = textUsername.Text;
-                string site = ConfigurationManager.AppSettings["Site"];
 
-                foreach (char character in textPassword.Text)
-                {
-                    password.AppendChar(character);
-                }
+                if (textPassword.Text != "xxxxxxxxxxxxx")
+                    foreach (char character in textPassword.Text)
+                    {
+                        password.AppendChar(character);
+                    }
 
                 try
                 {
@@ -94,10 +99,7 @@ namespace IssueCreator
             else
                 throw new NullReferenceException();
 
-            configuration.AppSettings.Settings["Username"].Value = textUsername.Text;
-            configuration.Save();
-            ConfigurationManager.RefreshSection("appSettings");
-
+            username = textUsername.Text;
         }
 
         private void buttonBrowse_Click(object sender, EventArgs e)
@@ -107,7 +109,7 @@ namespace IssueCreator
             {
                 textFolder.Text = folderBrowserDialog1.SelectedPath;
 
-                configuration.AppSettings.Settings["Path"].Value = folderBrowserDialog1.SelectedPath;
+                path = folderBrowserDialog1.SelectedPath;
                 FormState();
             }
         }

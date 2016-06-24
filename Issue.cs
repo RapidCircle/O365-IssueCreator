@@ -13,6 +13,7 @@ using Microsoft.SharePoint.Client;
 using Squirrel;
 using Microsoft.SharePoint.Client.WebParts;
 using System.Reflection;
+using System.Security;
 
 namespace IssueCreator
 {
@@ -22,11 +23,16 @@ namespace IssueCreator
         private Connect connect;
         private string path;
         private string[] extensions = new[] { ".jpg", ".jpeg", ".bmp", ".png" };
+        private string username;
+        private string site;
+        private SecureString password = new SecureString();
 
         private int maxImages;
         private bool deleteOnUpload;
         private bool WatchFolder;
         static bool ShowTheWelcomeWizard;
+
+        const string ProjectConfigFileName = "UserConfiguration.config";
 
         public Issue()
         {
@@ -38,20 +44,62 @@ namespace IssueCreator
         {
             notifyIconSQI.Visible = true;
 
-            maxImages = int.Parse(ConfigurationManager.AppSettings["MaxImages"]);
-            deleteOnUpload = bool.Parse(ConfigurationManager.AppSettings["DeleteOnUpload"]);
-            WatchFolder = bool.Parse(ConfigurationManager.AppSettings["WatchFolder"]);
+            DirectoryInfo di = new DirectoryInfo(Assembly.GetEntryAssembly().Location);
+            string userConfigPath = di.Parent.Parent.FullName + "\\" + ProjectConfigFileName;
+
+            ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
+            configMap.ExeConfigFilename = userConfigPath;
+            Configuration config;
+
+            if (!System.IO.File.Exists(userConfigPath))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+                sb.AppendLine("<configuration>");
+                sb.AppendLine("</configuration>");
+
+                System.IO.File.WriteAllText(userConfigPath, sb.ToString());
+            }
+
+            config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+
+            if (config.AppSettings.Settings["Password"] != null)
+            {
+                foreach (char letter in config.AppSettings.Settings["Password"].Value)
+                    password.AppendChar(letter);
+            }
+
+            //webUrl = config.AppSettings.Settings["WebURL"].Value;
+            //userName = config.AppSettings.Settings["UserName"].Value;
+            //password = securePassword;
+
+            username = config.AppSettings.Settings["Username"] == null ? "" : config.AppSettings.Settings["Username"].Value;
+            site = config.AppSettings.Settings["Site"] == null ? "https://rapidcircle1com.sharepoint.com/sites/Rapid/SampleProject5" : config.AppSettings.Settings["Site"].Value;
+            path = config.AppSettings.Settings["Path"] == null ? "" : config.AppSettings.Settings["Path"].Value;
+            maxImages = config.AppSettings.Settings["MaxImages"] == null ? 16 : int.Parse(config.AppSettings.Settings["MaxImages"].Value);
+            deleteOnUpload = config.AppSettings.Settings["DeleteOnUpload"] == null ? false : bool.Parse(config.AppSettings.Settings["DeleteOnUpload"].Value);
+            WatchFolder = config.AppSettings.Settings["WatchFolder"] == null ? false : bool.Parse(config.AppSettings.Settings["WatchFolder"].Value);
             checkDelete.Checked = deleteOnUpload;
 
             if (!connected)
             {
                 connect = new Connect();
+                connect.username = username;
+                connect.path = path;
+                connect.site = site;
+                connect.password = password;
                 connect.ShowDialog();
+                username = connect.username;
+                path = connect.path;
+
+                AddUpdateConfiguration(config, "Username", username);
+                AddUpdateConfiguration(config, "Path", path);
+                config.Save();
             }
 
-            linkIssuesList.Tag = ConfigurationManager.AppSettings["Site"] + "/lists/issues";
-            linkSite.Tag = ConfigurationManager.AppSettings["Site"];
-            linkScreenshots.Tag = ConfigurationManager.AppSettings["Path"];
+            linkIssuesList.Tag = site + "/lists/issues";
+            linkSite.Tag = site;
+            linkScreenshots.Tag = path;
 
             PopulateDropdownFromField(comboCategory, "Category");
             PopulateDropdownFromField(comboPriority, "Priority");
@@ -59,7 +107,6 @@ namespace IssueCreator
             comboAssigned.DisplayMember = "Display";
             PopulateUsersInAssignedTo(comboAssigned);
 
-            path = ConfigurationManager.AppSettings["Path"];
             FileSystemWatcher FileSystemWatcher = new FileSystemWatcher();
             FileSystemWatcher.Path = path;
             FileSystemWatcher.IncludeSubdirectories = false;
@@ -93,6 +140,14 @@ namespace IssueCreator
                     linkConfigureIssueForm.Visible = true;
             }
             UpdateApp();
+        }
+
+        private void AddUpdateConfiguration(Configuration config, string key, string value)
+        {
+            if (config.AppSettings.Settings[key] != null)
+                config.AppSettings.Settings[key].Value = value;
+            else
+                config.AppSettings.Settings.Add(key, value);
         }
 
         protected override void OnClosed(EventArgs e)
