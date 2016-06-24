@@ -379,7 +379,7 @@ namespace IssueCreator
 
                     var release = await mgr.UpdateApp();
 
-                    linkUpgrade.Text = "Upgraded. Click to restart.";
+                    linkUpgrade.Text = "Upgraded - Click to restart";
                     linkUpgrade.Enabled = true;
                     linkUpgrade.LinkBehavior = LinkBehavior.HoverUnderline;
                 }
