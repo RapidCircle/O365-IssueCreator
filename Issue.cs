@@ -19,13 +19,13 @@ namespace IssueCreator
 {
     public partial class Issue : System.Windows.Forms.Form
     {
+        private Configuration config;
         private bool connected;
         private Connect connect;
-        private string path;
         private string[] extensions = new[] { ".jpg", ".jpeg", ".bmp", ".png" };
-        private string username;
-        private string site;
         private SecureString password = new SecureString();
+        private string profiles;
+        private string lastUsedProfile;
 
         private int maxImages;
         private bool deleteOnUpload;
@@ -49,7 +49,6 @@ namespace IssueCreator
 
             ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
             configMap.ExeConfigFilename = userConfigPath;
-            Configuration config;
 
             if (!System.IO.File.Exists(userConfigPath))
             {
@@ -69,37 +68,40 @@ namespace IssueCreator
                     password.AppendChar(letter);
             }
 
-            //webUrl = config.AppSettings.Settings["WebURL"].Value;
-            //userName = config.AppSettings.Settings["UserName"].Value;
-            //password = securePassword;
-
-            username = config.AppSettings.Settings["Username"] == null ? "" : config.AppSettings.Settings["Username"].Value;
-            site = config.AppSettings.Settings["Site"] == null ? "https://rapidcircle1com.sharepoint.com/sites/Rapid/SampleProject5" : config.AppSettings.Settings["Site"].Value;
-            path = config.AppSettings.Settings["Path"] == null ? "" : config.AppSettings.Settings["Path"].Value;
+            lastUsedProfile = config.AppSettings.Settings["LastUsedProfile"] == null ? "" : config.AppSettings.Settings["LastUsedProfile"].Value;
             maxImages = config.AppSettings.Settings["MaxImages"] == null ? 16 : int.Parse(config.AppSettings.Settings["MaxImages"].Value);
             deleteOnUpload = config.AppSettings.Settings["DeleteOnUpload"] == null ? false : bool.Parse(config.AppSettings.Settings["DeleteOnUpload"].Value);
             WatchFolder = config.AppSettings.Settings["WatchFolder"] == null ? false : bool.Parse(config.AppSettings.Settings["WatchFolder"].Value);
+            profiles = config.AppSettings.Settings["Profiles"] == null ? "" : config.AppSettings.Settings["Profiles"].Value;
+
             checkDelete.Checked = deleteOnUpload;
 
             if (!connected)
             {
                 connect = new Connect();
-                connect.username = username;
-                connect.path = path;
-                connect.site = site;
-                connect.password = password;
-                connect.ShowDialog();
-                username = connect.username;
-                path = connect.path;
+                connect.profiles = profiles;
+                connect.lastUsedProfile = lastUsedProfile;
 
-                AddUpdateConfiguration(config, "Username", username);
-                AddUpdateConfiguration(config, "Path", path);
+                connect.ShowDialog();
+
+                if (!connect.connected)
+                {
+                    Close();
+                    return;
+                }
+
+                profiles = connect.profiles;
+                lastUsedProfile = connect.lastUsedProfile;
+                this.Text = "Active Profile: " + connect.activeProfile.Name;
+
+                AddUpdateConfiguration(config, "Profiles", profiles);
+                AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);
                 config.Save();
             }
 
-            linkIssuesList.Tag = site + "/lists/issues";
-            linkSite.Tag = site;
-            linkScreenshots.Tag = path;
+            linkIssuesList.Tag = connect.activeProfile.SiteUrl + connect.issuesList.DefaultViewUrl;
+            linkSite.Tag = connect.activeProfile.SiteUrl;
+            linkScreenshots.Tag = connect.activeProfile.Path;
 
             PopulateDropdownFromField(comboCategory, "Category");
             PopulateDropdownFromField(comboPriority, "Priority");
@@ -108,7 +110,7 @@ namespace IssueCreator
             PopulateUsersInAssignedTo(comboAssigned);
 
             FileSystemWatcher FileSystemWatcher = new FileSystemWatcher();
-            FileSystemWatcher.Path = path;
+            FileSystemWatcher.Path = connect.activeProfile.Path;
             FileSystemWatcher.IncludeSubdirectories = false;
             FileSystemWatcher.NotifyFilter = NotifyFilters.FileName;
             FileSystemWatcher.SynchronizingObject = this;    
@@ -152,7 +154,7 @@ namespace IssueCreator
 
         protected override void OnClosed(EventArgs e)
         {
-            connect.configuration.Save();
+            config.Save();
             base.OnClosed(e);
         }
 
@@ -194,7 +196,7 @@ namespace IssueCreator
 
         private void FileSystemWatcher_Renamed(object sender, RenamedEventArgs e)
         {
-            if (!extensions.Any(e.Name.Contains))
+            if (!extensions.Any(e.Name.ToLower().Contains))
                 return;
 
             RefreshPictures();
@@ -202,7 +204,7 @@ namespace IssueCreator
 
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            if (!extensions.Any(e.Name.Contains))
+            if (!extensions.Any(e.Name.ToLower().Contains))
                 return;
 
             RefreshPictures();
@@ -210,7 +212,7 @@ namespace IssueCreator
 
         private void FileSystemWatcher_Deleted(object sender, FileSystemEventArgs e)
         {
-            if (!extensions.Any(e.Name.Contains))
+            if (!extensions.Any(e.Name.ToLower().Contains))
                 return;
 
             RefreshPictures();
@@ -218,7 +220,7 @@ namespace IssueCreator
 
         private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
         {
-            if (!extensions.Any(e.Name.Contains))
+            if (!extensions.Any(e.Name.ToLower().Contains))
                 return;
 
             RefreshPictures();
@@ -234,7 +236,7 @@ namespace IssueCreator
         {
             flowPictureLayout.Controls.Clear();
 
-            DirectoryInfo di = new DirectoryInfo(path);
+            DirectoryInfo di = new DirectoryInfo(connect.activeProfile.Path);
             FileInfo[] files = di.GetFiles()
                      .Where(f => extensions.Contains(f.Extension.ToLower()))
                      .OrderBy(f => f.CreationTimeUtc)

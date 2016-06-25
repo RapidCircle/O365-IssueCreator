@@ -374,10 +374,13 @@
             // linkUpgrade
             // 
             this.linkUpgrade.AutoSize = true;
+            this.linkUpgrade.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.linkUpgrade.Location = new System.Drawing.Point(42, 27);
             this.linkUpgrade.Name = "linkUpgrade";
-            this.linkUpgrade.Size = new System.Drawing.Size(0, 25);
+            this.linkUpgrade.Size = new System.Drawing.Size(148, 25);
             this.linkUpgrade.TabIndex = 11;
+            this.linkUpgrade.TabStop = true;
+            this.linkUpgrade.Text = "Version check";
             this.linkUpgrade.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUpgrade_LinkClicked);
             // 
             // Issue
