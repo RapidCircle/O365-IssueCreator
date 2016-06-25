@@ -13,7 +13,7 @@ namespace IssueCreator
     public partial class PictureBoxDisplay : UserControl
     {
         private string name;
-        public event EventHandler Click;
+        public event EventHandler Enlarge;
 
         public string ImageLocation
         {
@@ -45,9 +45,9 @@ namespace IssueCreator
 
         private void pictureMain_Click(object sender, EventArgs e)
         {
-            if (this.Click != null)
+            if (this.Enlarge != null)
             {
-                this.Click(this, e);
+                this.Enlarge(this, e);
             }
         }
     }

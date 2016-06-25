@@ -56,6 +56,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "pictureboxEnlarge";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EnlargePicture";
             this.Load += new System.EventHandler(this.EnlargePicture_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureLarge)).EndInit();

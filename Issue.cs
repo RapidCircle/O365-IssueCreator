@@ -20,7 +20,6 @@ namespace IssueCreator
     public partial class Issue : System.Windows.Forms.Form
     {
         private Configuration config;
-        private bool connected;
         private Connect connect;
         private string[] extensions = new[] { ".jpg", ".jpeg", ".bmp", ".png" };
         private SecureString password = new SecureString();
@@ -30,7 +29,6 @@ namespace IssueCreator
         private int maxImages;
         private bool deleteOnUpload;
         private bool WatchFolder;
-        static bool ShowTheWelcomeWizard;
 
         const string ProjectConfigFileName = "UserConfiguration.config";
 
@@ -76,28 +74,27 @@ namespace IssueCreator
 
             checkDelete.Checked = deleteOnUpload;
 
-            if (!connected)
+            connect = new Connect();
+            connect.profiles = profiles;
+            connect.lastUsedProfile = lastUsedProfile;
+
+            connect.ShowDialog();
+
+            if (!connect.connected)
             {
-                connect = new Connect();
-                connect.profiles = profiles;
-                connect.lastUsedProfile = lastUsedProfile;
-
-                connect.ShowDialog();
-
-                if (!connect.connected)
-                {
-                    Close();
-                    return;
-                }
-
-                profiles = connect.profiles;
-                lastUsedProfile = connect.lastUsedProfile;
-                this.Text = "Active Profile: " + connect.activeProfile.Name;
-
-                AddUpdateConfiguration(config, "Profiles", profiles);
-                AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);
-                config.Save();
+                Close();
+                return;
             }
+
+            profiles = connect.profiles;
+            lastUsedProfile = connect.lastUsedProfile;
+            this.Text = "Active Profile: " + connect.activeProfile.Name;
+
+            AddUpdateConfiguration(config, "Profiles", profiles);
+            AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);
+            config.Save();
+        
+
             Uri spServer = new Uri(connect.activeProfile.SiteUrl);
             linkIssuesList.Tag = spServer.Scheme + "://" + spServer.Host + connect.issuesList.DefaultViewUrl;
             linkSite.Tag = connect.activeProfile.SiteUrl;
@@ -251,7 +248,7 @@ namespace IssueCreator
                 PictureBoxDisplay pbd = new PictureBoxDisplay();
                 pbd.Filename = file.Name;
                 pbd.ImageLocation = file.FullName;
-                pbd.Click += new EventHandler(picture_Click);
+                pbd.Enlarge += new EventHandler(picture_Click);
                 if (count == 1) pbd.Checked = true;
                 flowPictureLayout.Controls.Add(pbd);
             }
@@ -386,7 +383,7 @@ namespace IssueCreator
             using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/RapidCircle/O365-IssueCreator"))
             {
                 mgr.CreateShortcutForThisExe();
-                mgr.CreateUninstallerRegistryEntry();
+                await mgr.CreateUninstallerRegistryEntry();
             }
         }
 
@@ -395,7 +392,7 @@ namespace IssueCreator
             using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/RapidCircle/O365-IssueCreator"))
             {
                 mgr.CreateShortcutForThisExe();
-                mgr.CreateUninstallerRegistryEntry();
+                await mgr.CreateUninstallerRegistryEntry();
             }
         }
 
@@ -409,7 +406,7 @@ namespace IssueCreator
 
         internal void OnFirstRun()
         {
-            ShowTheWelcomeWizard = true;
+
         }
 
         private async void UpdateApp()

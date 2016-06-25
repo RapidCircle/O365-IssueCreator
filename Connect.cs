@@ -89,14 +89,14 @@ namespace IssueCreator
             {
                 cc.ExecuteQuery();
             }
-            catch (IdcrlException badPassword)
+            catch (IdcrlException)
             {
                 errorProvider1.SetError(textPassword, "Invalid Password or Username");
                 if (comboProfiles.Text == NewProfileLabel)
                     errorProvider1.SetError(textUsername, "Invalid Password or Username");
                 return false;
             }
-            catch(ClientRequestException badUrl)
+            catch(ClientRequestException)
             {
                 errorProvider1.SetError(textSite, "There is no SharePoint site at this URL");
                 return false;

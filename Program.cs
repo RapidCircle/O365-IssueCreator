@@ -10,8 +10,6 @@ namespace IssueCreator
 {
     static class Program
     {
-        static Issue issue;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
