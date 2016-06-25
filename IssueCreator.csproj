@@ -63,17 +63,20 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Screenshot_16px_1180186_easyicon.net.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DeltaCompressionDotNet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d14d6e5194e7f4a, processorArchitecture=MSIL">
-      <HintPath>packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.dll</HintPath>
+    <Reference Include="DeltaCompressionDotNet, Version=1.1.0.0, Culture=neutral, PublicKeyToken=1d14d6e5194e7f4a, processorArchitecture=MSIL">
+      <HintPath>packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DeltaCompressionDotNet.MsDelta, Version=1.0.0.0, Culture=neutral, PublicKeyToken=46b2138a390abf55, processorArchitecture=MSIL">
-      <HintPath>packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.MsDelta.dll</HintPath>
+    <Reference Include="DeltaCompressionDotNet.MsDelta, Version=1.1.0.0, Culture=neutral, PublicKeyToken=46b2138a390abf55, processorArchitecture=MSIL">
+      <HintPath>packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.MsDelta.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="DeltaCompressionDotNet.PatchApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3e8888ee913ed789, processorArchitecture=MSIL">
-      <HintPath>packages\DeltaCompressionDotNet.1.0.0\lib\net45\DeltaCompressionDotNet.PatchApi.dll</HintPath>
+    <Reference Include="DeltaCompressionDotNet.PatchApi, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3e8888ee913ed789, processorArchitecture=MSIL">
+      <HintPath>packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.PatchApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
@@ -81,63 +84,63 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.Client.Policy, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.Office.Client.Policy.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.Office.Client.Policy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.Client.TranslationServices, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.Office.Client.TranslationServices.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.Office.Client.TranslationServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.SharePoint.Tools, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.Office.SharePoint.Tools.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.Office.SharePoint.Tools.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Online.SharePoint.Client.Tenant, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ProjectServer.Client, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.ProjectServer.Client.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.ProjectServer.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.DocumentManagement, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.DocumentManagement.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.DocumentManagement.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Publishing, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.Publishing.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.Publishing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Runtime.Windows, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.Runtime.Windows.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.Runtime.Windows.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Search, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.Search.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.Search.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Search.Applications, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.Search.Applications.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.Search.Applications.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.Taxonomy, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.Taxonomy.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.Taxonomy.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.UserProfiles, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.UserProfiles.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.UserProfiles.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SharePoint.Client.WorkflowServices, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5312.1200\lib\net45\Microsoft.SharePoint.Client.WorkflowServices.dll</HintPath>
+      <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.SharePoint.Client.WorkflowServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
@@ -174,6 +177,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -267,6 +271,7 @@
     <Content Include="Issues_DispForm.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Screenshot_16px_1180186_easyicon.net.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

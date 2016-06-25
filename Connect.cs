@@ -256,19 +256,20 @@ namespace IssueCreator
 
             SharePointProfile spp = new SharePointProfile();
 
+            spp.SiteUrl = textSite.Text;
+            spp.IssueList = comboIssueList.Text;
+            spp.Path = textFolder.Text;
+            spp.Username = textUsername.Text;
+
             if (comboProfiles.Text == NewProfileLabel)
             {
                 spp.Name = textProfileName.Text;
                 profiles = profiles + "#" + spp.ToString();
             }
             else
+            {
                 spp.Name = comboProfiles.Text;
-
-
-            spp.SiteUrl = textSite.Text;
-            spp.IssueList = comboIssueList.Text;
-            spp.Path = textFolder.Text;
-            spp.Username = textUsername.Text;
+            }
 
             activeProfile = spp;
             lastUsedProfile = spp.Name;
