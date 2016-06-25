@@ -404,6 +404,7 @@
             this.MaximizeBox = false;
             this.Name = "Issue";
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Issue";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Activated += new System.EventHandler(this.Issue_Activated);

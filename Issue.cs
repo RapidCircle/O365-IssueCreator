@@ -98,8 +98,8 @@ namespace IssueCreator
                 AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);
                 config.Save();
             }
-
-            linkIssuesList.Tag = connect.activeProfile.SiteUrl + connect.issuesList.DefaultViewUrl;
+            Uri spServer = new Uri(connect.activeProfile.SiteUrl);
+            linkIssuesList.Tag = spServer.Scheme + "://" + spServer.Host + connect.issuesList.DefaultViewUrl;
             linkSite.Tag = connect.activeProfile.SiteUrl;
             linkScreenshots.Tag = connect.activeProfile.Path;
 

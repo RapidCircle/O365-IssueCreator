@@ -283,6 +283,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Connect";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Connect";
             this.Load += new System.EventHandler(this.Connect_Load);
             this.grpSharePoint.ResumeLayout(false);
