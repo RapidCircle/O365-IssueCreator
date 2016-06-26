@@ -1,2 +1,7 @@
-# O365-IssueCreator
-Windows application for quickly creating issues in a SharePoint/O365 issues list including screenshots.
+# Issue Creator for SharePoint/O365
+A Windows application for quickly creating issues, in a standard SharePoint issues list, that contain screenshots.
+
+![MainScreen - New.png](Screenshots/MainScreen - New.png)
+
+
+
