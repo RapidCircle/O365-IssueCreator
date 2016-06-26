@@ -23,5 +23,10 @@ namespace IssueCreator
         {
             this.pictureLarge.ImageLocation = picturePath;
         }
+
+        private void pictureLarge_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

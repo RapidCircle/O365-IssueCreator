@@ -44,6 +44,7 @@
             this.pictureLarge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureLarge.TabIndex = 0;
             this.pictureLarge.TabStop = false;
+            this.pictureLarge.Click += new System.EventHandler(this.pictureLarge_Click);
             // 
             // pictureboxEnlarge
             // 
