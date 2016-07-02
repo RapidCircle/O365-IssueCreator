@@ -14,6 +14,7 @@ A Windows application for quickly creating issues, in a standard SharePoint issu
 - Shortcuts to the active Issues List, Site and Screenshot folder.
 - Enlarged, resizeable previews of the screenshots available by clicking
 - Optionally install extensions to the standard SharePoint Issue Display Form that adds previews to the screenshots
+- Works with any existing screenshot tool (simply pulls images from a folder)
 
 
 [dl-latestversion]: /releases/download/1.0.4/SharePointIssueCreator-1.0.4.zip

@@ -251,7 +251,7 @@ namespace IssueCreator
         private void SetVariablesAndCloseForm()
         {
             issuesList = uploadWeb.Lists.GetByTitle(comboIssueList.Text);
-            cc.Load(issuesList, i => i.DefaultViewUrl);
+            cc.Load(issuesList, i => i.DefaultViewUrl, i => i.Id);
             cc.ExecuteQuery();
 
             SharePointProfile spp = new SharePointProfile();
