@@ -4,9 +4,9 @@
     <id>SharePointIssueCreator</id>
     <!-- version will be replaced by MSBuild -->
     <version>0.0.0.0</version>
-    <title>title</title>
-    <authors>authors</authors>
-    <description>description</description>
+    <title>Rapid Issue for O365</title>
+    <authors>Daniel McPherson (Rapid Circle)</authors>
+    <description>Quick and easy way to create issues with Screenshots using SharePoint.</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright 2016</copyright>
     <dependencies />

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SharePoint Issue Creator")]
-[assembly: AssemblyDescription("Quick and easy way to create issues with Screenshots using SharePoint. This program uses: http://www.codeproject.com/Articles/9543/RichTextBoxExtended")]
+[assembly: AssemblyTitle("Rapid Issue for O365")]
+[assembly: AssemblyDescription("Quick and easy way to create issues with Screenshots using SharePoint.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rapid Circle")]
-[assembly: AssemblyProduct("SharePoint Issue Creator")]
+[assembly: AssemblyProduct("RapidIssue")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.4.0")]
-[assembly: AssemblyFileVersion("1.0.4.0")]
+[assembly: AssemblyVersion("1.0.5.0")]
+[assembly: AssemblyFileVersion("1.0.5.0")]

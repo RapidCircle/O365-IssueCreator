@@ -284,7 +284,7 @@
             this.MinimizeBox = false;
             this.Name = "Connect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Connect";
+            this.Text = "Rapid Issue: Connect";
             this.Load += new System.EventHandler(this.Connect_Load);
             this.grpSharePoint.ResumeLayout(false);
             this.grpSharePoint.PerformLayout();
