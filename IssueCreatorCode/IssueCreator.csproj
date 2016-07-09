@@ -255,10 +255,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="icons\icon2-256.ico" />
+    <Content Include="icons\icon2-32.ico" />
+    <Content Include="icons\icon2-48.ico" />
     <Content Include="Issues_DispForm.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Screenshots\MainScreen - New.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
