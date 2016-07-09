@@ -17,4 +17,4 @@ A Windows application for quickly creating issues, in a standard SharePoint issu
 - Works with any existing screenshot tool (simply pulls images from a folder)
 
 
-[dl-latestversion]: releases/download/1.0.5/RapidIssue-1_0_5.zip
+[dl-latestversion]: https://github.com/RapidCircle/O365-IssueCreator/releases/download/1.0.5/RapidIssue-1_0_5.zip
