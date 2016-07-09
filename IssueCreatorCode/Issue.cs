@@ -92,7 +92,7 @@ namespace IssueCreator
 
             profiles = connect.profiles;
             lastUsedProfile = connect.lastUsedProfile;
-            this.Text = "Active Profile: " + connect.activeProfile.Name;
+            this.Text = "Rapid Issue: " + connect.activeProfile.Name;
 
             AddUpdateConfiguration(config, "Profiles", profiles);
             AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);

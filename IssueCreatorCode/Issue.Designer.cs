@@ -229,7 +229,7 @@
             // notifyIconSQI
             // 
             this.notifyIconSQI.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIconSQI.Icon")));
-            this.notifyIconSQI.Text = "SharePoint QuickIssue";
+            this.notifyIconSQI.Text = "Rapid Issue for O365";
             this.notifyIconSQI.Visible = true;
             this.notifyIconSQI.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIconSQI_MouseDoubleClick);
             // 
