@@ -106,5 +106,10 @@ namespace IssueCreator
         {
 
         }
+
+        private void logoPictureBox_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.rapidcircle.com?src=issuecreator");
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SharePoint Issue Creator")]
-[assembly: AssemblyDescription("Quick and easy way to create issues with Screenshots using SharePoint.")]
+[assembly: AssemblyDescription("Quick and easy way to create issues with Screenshots using SharePoint. This program uses: http://www.codeproject.com/Articles/9543/RichTextBoxExtended")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Rapid Circle")]
 [assembly: AssemblyProduct("SharePoint Issue Creator")]

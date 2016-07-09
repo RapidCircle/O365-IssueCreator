@@ -14,6 +14,8 @@ using Squirrel;
 using Microsoft.SharePoint.Client.WebParts;
 using System.Reflection;
 using System.Security;
+using YARTE.UI.Buttons;
+using System.Text.RegularExpressions;
 
 namespace IssueCreator
 {
@@ -41,6 +43,8 @@ namespace IssueCreator
         private void Issue_Load(object sender, EventArgs e)
         {
             notifyIconSQI.Visible = true;
+
+            PredefinedButtonSets.SetupDefaultButtons(htmlEditorDescription);
 
             DirectoryInfo di = new DirectoryInfo(Assembly.GetEntryAssembly().Location);
             string userConfigPath = di.Parent.Parent.FullName + "\\" + ProjectConfigFileName;
@@ -257,11 +261,14 @@ namespace IssueCreator
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            Regex re = new Regex(@"(?ix)<BODY>(?>.+?</BODY>)");
+            Match body = re.Match(htmlEditorDescription.Html);
+
             ListItemCreationInformation lic = new ListItemCreationInformation();
 
             ListItem li = connect.issuesList.AddItem(lic);
             li["Title"] = textTitle.Text;
-            li["Comment"] = rtbeDescription.RichTextBox.Text;
+            li["Comment"] = body.ToString().Substring(6, body.Length - 13);
             li["Status"] = comboStatus.Text;
             li["Priority"] = comboPriority.Text;
             li["Category"] = comboCategory.Text;
@@ -314,16 +321,17 @@ namespace IssueCreator
         private void ClearForm()
         {
             textTitle.Text = "";
-            rtbeDescription.RichTextBox.Text = "";
+            htmlEditorDescription.ResetText();
             comboCategory.Text = "";
             comboPriority.Text = "";
             comboStatus.Text = "";
             textComment.Text = "";
+            comboAssigned.Text = "";
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            if (textTitle.Text == "" && rtbeDescription.RichTextBox.Text == "" &&
+            if (textTitle.Text == "" && htmlEditorDescription.Html == "" &&
                 comboCategory.Text == "" && comboPriority.Text == "" &&  comboStatus.Text == "" &&
                 textComment.Text == "")
             {

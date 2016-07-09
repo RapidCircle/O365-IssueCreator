@@ -93,7 +93,18 @@
 .ms-bodyareaframe {
 	padding: 8px;
 	border: none;
-}</SharePoint:StyleBlock>
+}
+
+#Ribbon\2e ListForm\2e Display\2e Actions, #Ribbon\2e ListForm\2e Display\2e HealthActions, #Ribbon\2e ListForm\2e Display\2e Solution
+{
+display: none;
+}
+
+#Ribbon\2e ListForm\2e Display\2e Manage\2e EditSeries-Large
+{
+display: none;
+}
+</SharePoint:StyleBlock>
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderBodyLeftBorder" runat="server">
 <div class='ms-areaseparatorleft'><img src="/_layouts/15/images/blank.gif?rev=43" width='8' height='100%' alt="" data-accessibility-nocheck="true"/></div>
