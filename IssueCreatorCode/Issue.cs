@@ -323,7 +323,7 @@ namespace IssueCreator
         private void ClearForm()
         {
             textTitle.Text = "";
-            htmlEditorDescription.ResetText();
+            htmlEditorDescription.Html = "";
             comboCategory.Text = "";
             comboPriority.Text = "";
             comboStatus.Text = "";
@@ -384,7 +384,8 @@ namespace IssueCreator
 
         private void checkDelete_CheckedChanged(object sender, EventArgs e)
         {
-            connect.configuration.AppSettings.Settings["DeleteOnUpload"].Value = checkDelete.Checked.ToString();
+            AddUpdateConfiguration(config, "DeleteOnUpload", checkDelete.Checked.ToString());
+            deleteOnUpload = checkDelete.Checked;
         }
 
 
