@@ -261,14 +261,16 @@ namespace IssueCreator
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Regex re = new Regex(@"(?ix)<BODY>(?>.+?</BODY>)");
-            Match body = re.Match(htmlEditorDescription.Html);
-
             ListItemCreationInformation lic = new ListItemCreationInformation();
 
             ListItem li = connect.issuesList.AddItem(lic);
             li["Title"] = textTitle.Text;
-            li["Comment"] = body.ToString().Substring(6, body.Length - 13);
+
+            Regex re = new Regex(@"(?ix)<BODY>(?>.+?</BODY>)");
+            Match body = re.Match(htmlEditorDescription.Html);
+            if (!string.IsNullOrEmpty(body.ToString()))
+                li["Comment"] = body.ToString().Substring(6, body.Length - 13);
+
             li["Status"] = comboStatus.Text;
             li["Priority"] = comboPriority.Text;
             li["Category"] = comboCategory.Text;
