@@ -74,6 +74,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Office.Client.Policy, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.SharePointOnline.CSOM.16.1.5326.1200\lib\net45\Microsoft.Office.Client.Policy.dll</HintPath>
       <Private>True</Private>
@@ -135,6 +138,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="ModelEditControl">
+      <HintPath>..\..\..\..\..\..\temp\ModelEditControl.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <HintPath>packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
@@ -177,9 +183,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="YARTE">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2015\Projects\YARTEPROJ\YARTE\YARTE\bin\Release\YARTE.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutBox.cs">
@@ -199,6 +202,12 @@
     </Compile>
     <Compile Include="EnlargePicture.Designer.cs">
       <DependentUpon>EnlargePicture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormInsertHyperlink.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormInsertHyperlink.Designer.cs">
+      <DependentUpon>FormInsertHyperlink.cs</DependentUpon>
     </Compile>
     <Compile Include="Issue.cs">
       <SubType>Form</SubType>
@@ -222,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EnlargePicture.resx">
       <DependentUpon>EnlargePicture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormInsertHyperlink.resx">
+      <DependentUpon>FormInsertHyperlink.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Issue.resx">
       <DependentUpon>Issue.cs</DependentUpon>

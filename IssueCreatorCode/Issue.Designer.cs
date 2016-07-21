@@ -32,7 +32,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Issue));
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.htmlEditorDescription = new YARTE.UI.HtmlEditor();
             this.label7 = new System.Windows.Forms.Label();
             this.comboAssigned = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -57,6 +56,7 @@
             this.linkAbout = new System.Windows.Forms.LinkLabel();
             this.linkConfigureIssueForm = new System.Windows.Forms.LinkLabel();
             this.linkUpgrade = new System.Windows.Forms.LinkLabel();
+            this.tooledControlDescription = new ModelText.ModelEditControl.TooledControl();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +73,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.htmlEditorDescription);
+            this.groupBox1.Controls.Add(this.tooledControlDescription);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.comboAssigned);
             this.groupBox1.Controls.Add(this.label6);
@@ -93,17 +93,6 @@
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Issue Details";
-            // 
-            // htmlEditorDescription
-            // 
-            this.htmlEditorDescription.Html = resources.GetString("htmlEditorDescription.Html");
-            this.htmlEditorDescription.Location = new System.Drawing.Point(178, 229);
-            this.htmlEditorDescription.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.htmlEditorDescription.Name = "htmlEditorDescription";
-            this.htmlEditorDescription.ReadOnly = false;
-            this.htmlEditorDescription.ShowToolbar = true;
-            this.htmlEditorDescription.Size = new System.Drawing.Size(1167, 266);
-            this.htmlEditorDescription.TabIndex = 15;
             // 
             // label7
             // 
@@ -341,6 +330,14 @@
             this.linkUpgrade.Text = "Version check";
             this.linkUpgrade.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUpgrade_LinkClicked);
             // 
+            // tooledControlDescription
+            // 
+            this.tooledControlDescription.Location = new System.Drawing.Point(177, 224);
+            this.tooledControlDescription.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tooledControlDescription.Name = "tooledControlDescription";
+            this.tooledControlDescription.Size = new System.Drawing.Size(1169, 262);
+            this.tooledControlDescription.TabIndex = 15;
+            // 
             // Issue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -403,6 +400,6 @@
         private System.Windows.Forms.LinkLabel linkAbout;
         private System.Windows.Forms.LinkLabel linkConfigureIssueForm;
         private System.Windows.Forms.LinkLabel linkUpgrade;
-        private YARTE.UI.HtmlEditor htmlEditorDescription;
+        private ModelText.ModelEditControl.TooledControl tooledControlDescription;
     }
 }
