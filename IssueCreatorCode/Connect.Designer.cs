@@ -79,7 +79,7 @@
             this.textSite.Location = new System.Drawing.Point(157, 50);
             this.textSite.Name = "textSite";
             this.textSite.Size = new System.Drawing.Size(647, 31);
-            this.textSite.TabIndex = 1;
+            this.textSite.TabIndex = 0;
             // 
             // label4
             // 
@@ -96,7 +96,7 @@
             this.buttonConnect.Location = new System.Drawing.Point(255, 197);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(382, 62);
-            this.buttonConnect.TabIndex = 4;
+            this.buttonConnect.TabIndex = 3;
             this.buttonConnect.Text = "Retrieve Issues Lists";
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
@@ -116,7 +116,7 @@
             this.textPassword.Name = "textPassword";
             this.textPassword.PasswordChar = '*';
             this.textPassword.Size = new System.Drawing.Size(647, 31);
-            this.textPassword.TabIndex = 3;
+            this.textPassword.TabIndex = 2;
             this.textPassword.TextChanged += new System.EventHandler(this.textPassword_TextChanged);
             this.textPassword.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textPassword_KeyUp);
             this.textPassword.Leave += new System.EventHandler(this.textPassword_Leave);
@@ -135,7 +135,7 @@
             this.textUsername.Location = new System.Drawing.Point(157, 97);
             this.textUsername.Name = "textUsername";
             this.textUsername.Size = new System.Drawing.Size(647, 31);
-            this.textUsername.TabIndex = 2;
+            this.textUsername.TabIndex = 1;
             this.textUsername.TextChanged += new System.EventHandler(this.textUsername_TextChanged);
             this.textUsername.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textUsername_KeyUp);
             this.textUsername.Leave += new System.EventHandler(this.textUsername_Leave);
@@ -166,7 +166,7 @@
             this.textFolder.Name = "textFolder";
             this.textFolder.ReadOnly = true;
             this.textFolder.Size = new System.Drawing.Size(583, 31);
-            this.textFolder.TabIndex = 4;
+            this.textFolder.TabIndex = 1;
             this.textFolder.TextChanged += new System.EventHandler(this.textFolder_TextChanged);
             // 
             // buttonCancel
@@ -209,7 +209,7 @@
             this.comboIssueList.Location = new System.Drawing.Point(157, 54);
             this.comboIssueList.Name = "comboIssueList";
             this.comboIssueList.Size = new System.Drawing.Size(583, 33);
-            this.comboIssueList.TabIndex = 1;
+            this.comboIssueList.TabIndex = 0;
             this.comboIssueList.SelectedIndexChanged += new System.EventHandler(this.comboIssueList_SelectedIndexChanged);
             // 
             // grpProfile
@@ -257,7 +257,7 @@
             this.buttonOK.Location = new System.Drawing.Point(504, 686);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(182, 66);
-            this.buttonOK.TabIndex = 4;
+            this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);

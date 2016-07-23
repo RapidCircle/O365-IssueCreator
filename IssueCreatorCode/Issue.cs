@@ -16,6 +16,7 @@ using ModelText.ModelEditToolCommands;
 using ModelText.ModelDom.Range;
 using ModelText.ModelDom.Nodes;
 using FileOpenAndSave;
+using System.Threading;
 
 namespace IssueCreator
 {
@@ -104,7 +105,6 @@ namespace IssueCreator
             AddUpdateConfiguration(config, "Profiles", profiles);
             AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);
             config.Save();
-        
 
             Uri spServer = new Uri(connect.activeProfile.SiteUrl);
             linkIssuesList.Tag = spServer.Scheme + "://" + spServer.Host + connect.issuesList.DefaultViewUrl;
@@ -121,7 +121,7 @@ namespace IssueCreator
             FileSystemWatcher.Path = connect.activeProfile.Path;
             FileSystemWatcher.IncludeSubdirectories = false;
             FileSystemWatcher.NotifyFilter = NotifyFilters.FileName;
-            FileSystemWatcher.SynchronizingObject = this;    
+            FileSystemWatcher.SynchronizingObject = this;
             FileSystemWatcher.Filter = "*.*";
             FileSystemWatcher.Created += FileSystemWatcher_Created;
             FileSystemWatcher.Deleted += FileSystemWatcher_Deleted;
@@ -131,7 +131,13 @@ namespace IssueCreator
 
             RefreshPictures();
 
-            //Check if the custom issues web part is deployed.
+            SetIssueListCustomisationEnabled();
+
+            UpdateApp();
+        }
+
+        private void SetIssueListCustomisationEnabled()
+        {
             Microsoft.SharePoint.Client.File issuesDisplayForm = connect.issuesList.RootFolder.Files.GetByUrl("DispForm.aspx");
             LimitedWebPartManager limitedWebPartManager = issuesDisplayForm.GetLimitedWebPartManager(PersonalizationScope.Shared);
             connect.cc.Load(limitedWebPartManager,
@@ -141,7 +147,7 @@ namespace IssueCreator
 
             foreach (WebPartDefinition wp in limitedWebPartManager.WebParts)
             {
-                if (wp.WebPart.Title == "IssuesCreator")
+                if (wp.WebPart.Title == "RapidIssueScreenshot")
                 {
                     linkConfigureIssueForm.Visible = false;
                     break;
@@ -149,7 +155,6 @@ namespace IssueCreator
                 else
                     linkConfigureIssueForm.Visible = true;
             }
-            UpdateApp();
         }
 
         private void AddUpdateConfiguration(Configuration config, string key, string value)
@@ -165,7 +170,6 @@ namespace IssueCreator
             config.Save();
             base.OnClosed(e);
         }
-
 
         private void PopulateDropdownFromField(ComboBox dropDown, string fieldTitle)
         {
@@ -243,6 +247,7 @@ namespace IssueCreator
 
         private void RefreshPictures()
         {
+            Thread.Sleep(400);
             flowPictureLayout.Controls.Clear();
 
             DirectoryInfo di = new DirectoryInfo(connect.activeProfile.Path);
@@ -363,7 +368,12 @@ namespace IssueCreator
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            if (textTitle.Text != "" || //htmlEditorDescription.Html == "" &&
+            string description;
+            StringWriter sw = new StringWriter();
+            modelEdit.save(sw, XmlHeaderType.None);
+            description = sw.ToString();
+
+            if (textTitle.Text != "" || //description.Replace("\r\n","") != "<div></div>" ||
                 comboCategory.Text != "" || comboPriority.Text != "" ||  comboStatus.Text != "" ||
                 textComment.Text != "" || comboAssigned.SelectedItem != null)
             {
@@ -514,27 +524,18 @@ namespace IssueCreator
             if (result == DialogResult.No)
                 return;
 
-            string displayFormSource = System.IO.File.ReadAllText("Issues_DispForm.txt");
-            displayFormSource = displayFormSource.Replace("##LISTID##", connect.issuesList.Id.ToString());
-
-            FileCreationInformation displayForm = new FileCreationInformation();
-            displayForm.Url = "DispForm.aspx";
-            displayForm.Content = Encoding.UTF8.GetBytes(displayFormSource);
-            displayForm.Overwrite = true;
-            Microsoft.SharePoint.Client.File issuesDisplayForm = connect.issuesList.RootFolder.Files.Add(displayForm);
-            connect.cc.ExecuteQuery();
-
+            string fileUrl = connect.issuesList.RootFolder.ServerRelativeUrl + "/DispForm.aspx";
+            Microsoft.SharePoint.Client.File issuesDisplayForm = connect.uploadWeb.GetFileByUrl(fileUrl);
             LimitedWebPartManager limitedWebPartManager = issuesDisplayForm.GetLimitedWebPartManager(PersonalizationScope.Shared);
             connect.cc.Load(limitedWebPartManager.WebParts);
             connect.cc.ExecuteQuery();
 
-            string webPartFileDefinition = System.IO.File.ReadAllText("Attachments.dwp");
+            string webPartFileDefinition = System.IO.File.ReadAllText("webparts\\screenshots.webpart");
             WebPartDefinition webPartImported = limitedWebPartManager.ImportWebPart(webPartFileDefinition);
 
-            WebPartDefinition webPart = limitedWebPartManager.AddWebPart(webPartImported.WebPart, "MainRight", 0);
+            WebPartDefinition webPart = limitedWebPartManager.AddWebPart(webPartImported.WebPart, "Main", 0);
             connect.cc.Load(webPart, d => d.Id);
             connect.cc.ExecuteQuery();
-            MessageBox.Show("Screenshots have been successfully added to your Issues List");
             linkConfigureIssueForm.Visible = false;
         }
 

@@ -50,5 +50,15 @@ namespace FileOpenAndSave
             //enable the OK button if and only if both edit boxes contain some text
             buttonOk.Enabled = !string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(visibleText);
         }
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

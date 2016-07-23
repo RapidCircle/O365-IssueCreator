@@ -1,0 +1,78 @@
+﻿<webParts>
+  <webPart xmlns="http://schemas.microsoft.com/WebPart/v3">
+    <metaData>
+      <type name="Microsoft.SharePoint.WebPartPages.ScriptEditorWebPart, Microsoft.SharePoint, Version=16.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" />
+      <importErrorMessage>Cannot import this Web Part.</importErrorMessage>
+    </metaData>
+    <data>
+      <properties>
+        <property name="ExportMode" type="exportmode">All</property>
+        <property name="HelpUrl" type="string" />
+        <property name="Hidden" type="bool">False</property>
+        <property name="Description" type="string">Allows authors to insert HTML snippets or scripts.</property>
+        <property name="Content" type="string">&lt;script type="text/javascript"&gt;
+ExecuteOrDelayUntilScriptLoaded(createScreenshots, "sp.js");
+
+function createScreenshots() 
+{
+document.querySelector("#onetIDListForm").insertAdjacentHTML("afterend", "&lt;div style='float:left; display:inline; width: 49%;'&gt;Screenshots&lt;/div&gt;&lt;div ID='screens' style='float:left; display:inline; width: 49%;'&gt;Screenshots&lt;/div&gt;");
+
+document.querySelector("#onetIDListForm").setAttribute('style','float:left; display:inline; width: 49%;');
+
+var anchor = null;
+var container;
+var items;
+
+container = document.getElementById('idAttachmentsTable');
+items = container.getElementsByTagName('a');
+
+var outPut='&lt;section id="screenshots"&gt;';
+for (var j = 0; j &lt; items.length; j++) 
+{ 
+	outPut=outPut + '&lt;a href="' + items[j].href + '"&gt;&lt;img src="' + items[j].href + '" /&gt;&lt;/a&gt;&lt;br&gt;';
+}
+outPut = outPut + '&lt;/section&gt;';
+
+document.getElementById('screens').innerHTML=outPut;
+}
+&lt;/script&gt;
+
+&lt;style&gt;
+#screenshots {
+  /* Prevent vertical gaps */
+  line-height: 0;
+   
+  -webkit-column-count: 2;
+  -webkit-column-gap:   3px;
+  -moz-column-count:    2;
+  -moz-column-gap:      3px;
+  column-count:         2;
+  column-gap:           3px;  
+  padding-bottom: 3px;
+}
+
+#screenshots img {
+  width: 100% !important;
+  height: auto !important;
+}
+&lt;/style&gt;</property>
+        <property name="CatalogIconImageUrl" type="string" />
+        <property name="Title" type="string">RapidIssueScreenshot</property>
+        <property name="AllowHide" type="bool">True</property>
+        <property name="AllowMinimize" type="bool">True</property>
+        <property name="AllowZoneChange" type="bool">True</property>
+        <property name="TitleUrl" type="string" />
+        <property name="ChromeType" type="chrometype">None</property>
+        <property name="AllowConnect" type="bool">True</property>
+        <property name="Width" type="unit" />
+        <property name="Height" type="unit" />
+        <property name="HelpMode" type="helpmode">Navigate</property>
+        <property name="AllowEdit" type="bool">True</property>
+        <property name="TitleIconImageUrl" type="string" />
+        <property name="Direction" type="direction">NotSet</property>
+        <property name="AllowClose" type="bool">True</property>
+        <property name="ChromeState" type="chromestate">Normal</property>
+      </properties>
+    </data>
+  </webPart>
+</webParts>

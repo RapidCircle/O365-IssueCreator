@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Issue));
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tooledControlDescription = new ModelText.ModelEditControl.TooledControl();
             this.label7 = new System.Windows.Forms.Label();
             this.comboAssigned = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,7 +57,6 @@
             this.linkAbout = new System.Windows.Forms.LinkLabel();
             this.linkConfigureIssueForm = new System.Windows.Forms.LinkLabel();
             this.linkUpgrade = new System.Windows.Forms.LinkLabel();
-            this.tooledControlDescription = new ModelText.ModelEditControl.TooledControl();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -94,6 +94,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Issue Details";
             // 
+            // tooledControlDescription
+            // 
+            this.tooledControlDescription.Location = new System.Drawing.Point(177, 224);
+            this.tooledControlDescription.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tooledControlDescription.Name = "tooledControlDescription";
+            this.tooledControlDescription.Size = new System.Drawing.Size(1169, 262);
+            this.tooledControlDescription.TabIndex = 4;
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -109,7 +117,7 @@
             this.comboAssigned.Location = new System.Drawing.Point(177, 76);
             this.comboAssigned.Name = "comboAssigned";
             this.comboAssigned.Size = new System.Drawing.Size(713, 33);
-            this.comboAssigned.TabIndex = 13;
+            this.comboAssigned.TabIndex = 1;
             // 
             // label6
             // 
@@ -126,7 +134,7 @@
             this.textComment.Multiline = true;
             this.textComment.Name = "textComment";
             this.textComment.Size = new System.Drawing.Size(1169, 166);
-            this.textComment.TabIndex = 11;
+            this.textComment.TabIndex = 6;
             // 
             // comboCategory
             // 
@@ -134,7 +142,7 @@
             this.comboCategory.Location = new System.Drawing.Point(177, 511);
             this.comboCategory.Name = "comboCategory";
             this.comboCategory.Size = new System.Drawing.Size(427, 33);
-            this.comboCategory.TabIndex = 10;
+            this.comboCategory.TabIndex = 5;
             // 
             // label5
             // 
@@ -160,7 +168,7 @@
             this.comboPriority.Location = new System.Drawing.Point(178, 172);
             this.comboPriority.Name = "comboPriority";
             this.comboPriority.Size = new System.Drawing.Size(426, 33);
-            this.comboPriority.TabIndex = 5;
+            this.comboPriority.TabIndex = 3;
             // 
             // label3
             // 
@@ -177,7 +185,7 @@
             this.comboStatus.Location = new System.Drawing.Point(178, 123);
             this.comboStatus.Name = "comboStatus";
             this.comboStatus.Size = new System.Drawing.Size(426, 33);
-            this.comboStatus.TabIndex = 3;
+            this.comboStatus.TabIndex = 2;
             // 
             // label2
             // 
@@ -194,7 +202,7 @@
             this.textTitle.MaxLength = 255;
             this.textTitle.Name = "textTitle";
             this.textTitle.Size = new System.Drawing.Size(1169, 31);
-            this.textTitle.TabIndex = 1;
+            this.textTitle.TabIndex = 0;
             // 
             // label1
             // 
@@ -329,14 +337,6 @@
             this.linkUpgrade.TabStop = true;
             this.linkUpgrade.Text = "Version check";
             this.linkUpgrade.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUpgrade_LinkClicked);
-            // 
-            // tooledControlDescription
-            // 
-            this.tooledControlDescription.Location = new System.Drawing.Point(177, 224);
-            this.tooledControlDescription.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tooledControlDescription.Name = "tooledControlDescription";
-            this.tooledControlDescription.Size = new System.Drawing.Size(1169, 262);
-            this.tooledControlDescription.TabIndex = 15;
             // 
             // Issue
             // 

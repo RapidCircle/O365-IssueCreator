@@ -111,5 +111,21 @@ namespace IssueCreator
         {
             System.Diagnostics.Process.Start("http://www.rapidcircle.com?src=issuecreator");
         }
+
+        private void linkLabelRC_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.rapidcircle.com?src=issuecreator");
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/RapidCircle/O365-IssueCreator");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frmLicenses lic = new frmLicenses();
+            lic.ShowDialog();
+        }
     }
 }
