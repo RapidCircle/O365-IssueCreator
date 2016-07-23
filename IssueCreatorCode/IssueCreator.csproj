@@ -290,7 +290,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\icon-256.ico" />
-    <Content Include="icons\icon-48.ico" />
     <None Include="ModelText.lic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
