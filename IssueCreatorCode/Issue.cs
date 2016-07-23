@@ -530,7 +530,7 @@ namespace IssueCreator
             connect.cc.Load(limitedWebPartManager.WebParts);
             connect.cc.ExecuteQuery();
 
-            string webPartFileDefinition = System.IO.File.ReadAllText("webparts\\screenshots.webpart");
+            string webPartFileDefinition = System.IO.File.ReadAllText("screenshots.webpart");
             WebPartDefinition webPartImported = limitedWebPartManager.ImportWebPart(webPartFileDefinition);
 
             WebPartDefinition webPart = limitedWebPartManager.AddWebPart(webPartImported.WebPart, "Main", 0);

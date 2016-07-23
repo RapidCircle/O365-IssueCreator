@@ -23,10 +23,10 @@ namespace IssueCreator
             switch (listBoxLicenses.SelectedItem.ToString())
             {
                 case "Rapid Issue":
-                    richTextBoxLicense.Text = File.ReadAllText("licenses\\RapidIssue.txt");
+                    richTextBoxLicense.Text = File.ReadAllText("RapidIssue.lic");
                     break;
                 case "ModelText":
-                    richTextBoxLicense.Text = File.ReadAllText("licenses\\ModelText.txt");
+                    richTextBoxLicense.Text = File.ReadAllText("ModelText.lic");
                     break;
                 default:
                     break;

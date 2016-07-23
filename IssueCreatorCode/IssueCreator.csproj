@@ -267,7 +267,7 @@
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
-    <None Include="webparts\Screenshots.webpart">
+    <None Include="Screenshots.webpart">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -291,12 +291,12 @@
   <ItemGroup>
     <Content Include="icons\icon-256.ico" />
     <Content Include="icons\icon-48.ico" />
-    <Content Include="licenses\ModelText.txt">
+    <None Include="ModelText.lic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="licenses\RapidIssue.txt">
+    </None>
+    <None Include="RapidIssue.lic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
