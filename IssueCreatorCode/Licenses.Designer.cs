@@ -48,8 +48,7 @@
             this.listBoxLicenses.FormattingEnabled = true;
             this.listBoxLicenses.ItemHeight = 25;
             this.listBoxLicenses.Items.AddRange(new object[] {
-            "Rapid Issue",
-            "ModelText"});
+            "Rapid Issue"});
             this.listBoxLicenses.Location = new System.Drawing.Point(12, 12);
             this.listBoxLicenses.Name = "listBoxLicenses";
             this.listBoxLicenses.Size = new System.Drawing.Size(231, 379);

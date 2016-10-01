@@ -25,9 +25,6 @@ namespace IssueCreator
                 case "Rapid Issue":
                     richTextBoxLicense.Text = File.ReadAllText("RapidIssue.lic");
                     break;
-                case "ModelText":
-                    richTextBoxLicense.Text = File.ReadAllText("ModelText.lic");
-                    break;
                 default:
                     break;
             }

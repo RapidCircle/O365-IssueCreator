@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Issue));
             this.buttonSave = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tooledControlDescription = new ModelText.ModelEditControl.TooledControl();
+            this.richTextBoxDescription = new System.Windows.Forms.RichTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboAssigned = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -57,13 +57,15 @@
             this.linkAbout = new System.Windows.Forms.LinkLabel();
             this.linkConfigureIssueForm = new System.Windows.Forms.LinkLabel();
             this.linkUpgrade = new System.Windows.Forms.LinkLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(1086, 1225);
+            this.buttonSave.Location = new System.Drawing.Point(1084, 1071);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(186, 61);
             this.buttonSave.TabIndex = 0;
@@ -73,7 +75,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tooledControlDescription);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.comboAssigned);
             this.groupBox1.Controls.Add(this.label6);
@@ -89,18 +91,23 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(42, 454);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1421, 752);
+            this.groupBox1.Size = new System.Drawing.Size(1421, 602);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Issue Details";
             // 
-            // tooledControlDescription
+            // richTextBoxDescription
             // 
-            this.tooledControlDescription.Location = new System.Drawing.Point(177, 224);
-            this.tooledControlDescription.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.tooledControlDescription.Name = "tooledControlDescription";
-            this.tooledControlDescription.Size = new System.Drawing.Size(1169, 262);
-            this.tooledControlDescription.TabIndex = 4;
+            this.richTextBoxDescription.AutoWordSelection = true;
+            this.richTextBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxDescription.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxDescription.Name = "richTextBoxDescription";
+            this.richTextBoxDescription.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.richTextBoxDescription.Size = new System.Drawing.Size(1167, 140);
+            this.richTextBoxDescription.TabIndex = 15;
+            this.richTextBoxDescription.Text = "";
+            this.richTextBoxDescription.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBoxDescription_LinkClicked);
             // 
             // label7
             // 
@@ -122,7 +129,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(51, 563);
+            this.label6.Location = new System.Drawing.Point(51, 441);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(120, 25);
             this.label6.TabIndex = 12;
@@ -130,16 +137,16 @@
             // 
             // textComment
             // 
-            this.textComment.Location = new System.Drawing.Point(177, 560);
+            this.textComment.Location = new System.Drawing.Point(177, 438);
             this.textComment.Multiline = true;
             this.textComment.Name = "textComment";
-            this.textComment.Size = new System.Drawing.Size(1169, 166);
+            this.textComment.Size = new System.Drawing.Size(1169, 142);
             this.textComment.TabIndex = 6;
             // 
             // comboCategory
             // 
             this.comboCategory.FormattingEnabled = true;
-            this.comboCategory.Location = new System.Drawing.Point(177, 511);
+            this.comboCategory.Location = new System.Drawing.Point(177, 389);
             this.comboCategory.Name = "comboCategory";
             this.comboCategory.Size = new System.Drawing.Size(427, 33);
             this.comboCategory.TabIndex = 5;
@@ -147,7 +154,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(66, 515);
+            this.label5.Location = new System.Drawing.Point(66, 393);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(105, 25);
             this.label5.TabIndex = 9;
@@ -215,7 +222,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(1278, 1225);
+            this.buttonCancel.Location = new System.Drawing.Point(1276, 1071);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(186, 61);
             this.buttonCancel.TabIndex = 2;
@@ -291,7 +298,7 @@
             // 
             this.checkDelete.AutoSize = true;
             this.checkDelete.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkDelete.Location = new System.Drawing.Point(695, 1242);
+            this.checkDelete.Location = new System.Drawing.Point(693, 1088);
             this.checkDelete.Name = "checkDelete";
             this.checkDelete.Size = new System.Drawing.Size(361, 29);
             this.checkDelete.TabIndex = 8;
@@ -317,7 +324,7 @@
             this.linkConfigureIssueForm.AutoSize = true;
             this.linkConfigureIssueForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkConfigureIssueForm.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkConfigureIssueForm.Location = new System.Drawing.Point(37, 1242);
+            this.linkConfigureIssueForm.Location = new System.Drawing.Point(35, 1088);
             this.linkConfigureIssueForm.Name = "linkConfigureIssueForm";
             this.linkConfigureIssueForm.Size = new System.Drawing.Size(475, 29);
             this.linkConfigureIssueForm.TabIndex = 10;
@@ -338,12 +345,22 @@
             this.linkUpgrade.Text = "Version check";
             this.linkUpgrade.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUpgrade_LinkClicked);
             // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.richTextBoxDescription);
+            this.panel1.Location = new System.Drawing.Point(178, 229);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1169, 142);
+            this.panel1.TabIndex = 16;
+            // 
             // Issue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1495, 1301);
+            this.ClientSize = new System.Drawing.Size(1495, 1144);
             this.Controls.Add(this.linkUpgrade);
             this.Controls.Add(this.linkConfigureIssueForm);
             this.Controls.Add(this.linkAbout);
@@ -367,6 +384,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -400,6 +418,7 @@
         private System.Windows.Forms.LinkLabel linkAbout;
         private System.Windows.Forms.LinkLabel linkConfigureIssueForm;
         private System.Windows.Forms.LinkLabel linkUpgrade;
-        private ModelText.ModelEditControl.TooledControl tooledControlDescription;
+        private System.Windows.Forms.RichTextBox richTextBoxDescription;
+        private System.Windows.Forms.Panel panel1;
     }
 }
