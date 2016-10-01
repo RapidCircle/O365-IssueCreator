@@ -1,11 +1,14 @@
-﻿namespace IssueCreator
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace IssueCreator
 {
     partial class frmLicenses
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -82,8 +85,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.ListBox listBoxLicenses;
-        private System.Windows.Forms.RichTextBox richTextBoxLicense;
+        private Button buttonOK;
+        private ListBox listBoxLicenses;
+        private RichTextBox richTextBoxLicense;
     }
 }

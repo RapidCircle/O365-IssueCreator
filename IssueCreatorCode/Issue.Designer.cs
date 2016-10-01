@@ -1,11 +1,14 @@
-﻿namespace IssueCreator
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace IssueCreator
 {
     partial class Issue
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -392,33 +395,33 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox comboPriority;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboStatus;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textTitle;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textComment;
-        private System.Windows.Forms.ComboBox comboCategory;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.NotifyIcon notifyIconSQI;
-        private System.Windows.Forms.FlowLayoutPanel flowPictureLayout;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.LinkLabel linkSite;
-        private System.Windows.Forms.LinkLabel linkIssuesList;
-        private System.Windows.Forms.LinkLabel linkScreenshots;
-        private System.Windows.Forms.CheckBox checkDelete;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboAssigned;
-        private System.Windows.Forms.LinkLabel linkAbout;
-        private System.Windows.Forms.LinkLabel linkConfigureIssueForm;
-        private System.Windows.Forms.LinkLabel linkUpgrade;
-        private System.Windows.Forms.RichTextBox richTextBoxDescription;
-        private System.Windows.Forms.Panel panel1;
+        private Button buttonSave;
+        private GroupBox groupBox1;
+        private ComboBox comboPriority;
+        private Label label3;
+        private ComboBox comboStatus;
+        private Label label2;
+        private TextBox textTitle;
+        private Label label1;
+        private Label label4;
+        private Label label6;
+        private TextBox textComment;
+        private ComboBox comboCategory;
+        private Label label5;
+        private Button buttonCancel;
+        private NotifyIcon notifyIconSQI;
+        private FlowLayoutPanel flowPictureLayout;
+        private GroupBox groupBox2;
+        private LinkLabel linkSite;
+        private LinkLabel linkIssuesList;
+        private LinkLabel linkScreenshots;
+        private CheckBox checkDelete;
+        private Label label7;
+        private ComboBox comboAssigned;
+        private LinkLabel linkAbout;
+        private LinkLabel linkConfigureIssueForm;
+        private LinkLabel linkUpgrade;
+        private RichTextBox richTextBoxDescription;
+        private Panel panel1;
     }
 }

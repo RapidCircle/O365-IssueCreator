@@ -1,11 +1,14 @@
-﻿namespace IssueCreator
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace IssueCreator
 {
     partial class pictureboxEnlarge
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -67,6 +70,6 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureLarge;
+        private PictureBox pictureLarge;
     }
 }

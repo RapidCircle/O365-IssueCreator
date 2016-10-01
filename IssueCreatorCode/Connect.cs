@@ -1,20 +1,15 @@
-﻿using Microsoft.SharePoint.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Security;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Microsoft.SharePoint.Client;
+using Form = System.Windows.Forms.Form;
 
 namespace IssueCreator
 {
-    public partial class Connect : System.Windows.Forms.Form
+    public partial class Connect : Form
     {
         private const string NewProfileLabel = "New...";
         public SecureString password;
@@ -23,7 +18,7 @@ namespace IssueCreator
         public Site uploadSite;
         public List issuesList;
         private ListCollection lists;
-        public bool connected = false;
+        public bool connected;
         public Configuration configuration;
         public SharePointProfile activeProfile;
         public string profiles;
@@ -264,7 +259,7 @@ namespace IssueCreator
             if (comboProfiles.Text == NewProfileLabel)
             {
                 spp.Name = textProfileName.Text;
-                profiles = profiles + "#" + spp.ToString();
+                profiles = profiles + "#" + spp;
             }
             else
             {
@@ -274,8 +269,8 @@ namespace IssueCreator
             activeProfile = spp;
             lastUsedProfile = spp.Name;
 
-            this.WindowState = FormWindowState.Minimized;
-            this.ShowInTaskbar = false;
+            WindowState = FormWindowState.Minimized;
+            ShowInTaskbar = false;
         }
 
         private void comboIssueList_SelectedIndexChanged(object sender, EventArgs e)

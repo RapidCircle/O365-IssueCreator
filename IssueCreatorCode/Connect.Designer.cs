@@ -1,11 +1,14 @@
-﻿namespace IssueCreator
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace IssueCreator
 {
     partial class Connect
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -299,28 +302,28 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grpSharePoint;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textPassword;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textUsername;
-        private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.Button buttonBrowse;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textFolder;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.TextBox textSite;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox grpIssuesList;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboIssueList;
-        private System.Windows.Forms.GroupBox grpProfile;
-        private System.Windows.Forms.TextBox textProfileName;
-        private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.ComboBox comboProfiles;
-        private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private GroupBox grpSharePoint;
+        private Label label3;
+        private TextBox textPassword;
+        private Label label2;
+        private TextBox textUsername;
+        private Button buttonConnect;
+        private Button buttonBrowse;
+        private Label label1;
+        private TextBox textFolder;
+        private FolderBrowserDialog folderBrowserDialog1;
+        private Button buttonCancel;
+        private TextBox textSite;
+        private Label label4;
+        private GroupBox grpIssuesList;
+        private Label label5;
+        private ComboBox comboIssueList;
+        private GroupBox grpProfile;
+        private TextBox textProfileName;
+        private Label labelName;
+        private ComboBox comboProfiles;
+        private Button buttonOK;
+        private ErrorProvider errorProvider1;
     }
 }
 

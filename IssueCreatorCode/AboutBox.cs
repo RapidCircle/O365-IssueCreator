@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace IssueCreator
@@ -14,12 +11,12 @@ namespace IssueCreator
         public frmAboutBox()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            Text = String.Format("About {0}", AssemblyTitle);
+            labelProductName.Text = AssemblyProduct;
+            labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+            labelCopyright.Text = AssemblyCopyright;
+            labelCompanyName.Text = AssemblyCompany;
+            textBoxDescription.Text = AssemblyDescription;
         }
 
         #region Assembly Attribute Accessors
@@ -37,7 +34,7 @@ namespace IssueCreator
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
 
@@ -109,17 +106,17 @@ namespace IssueCreator
 
         private void logoPictureBox_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.rapidcircle.com?src=issuecreator");
+            Process.Start("http://www.rapidcircle.com?src=issuecreator");
         }
 
         private void linkLabelRC_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.rapidcircle.com?src=issuecreator");
+            Process.Start("http://www.rapidcircle.com?src=issuecreator");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/RapidCircle/O365-IssueCreator");
+            Process.Start("https://github.com/RapidCircle/O365-IssueCreator");
         }
 
         private void button1_Click(object sender, EventArgs e)

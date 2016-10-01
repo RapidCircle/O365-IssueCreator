@@ -1,33 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
-using Microsoft.SharePoint.Client;
-using Squirrel;
-using Microsoft.SharePoint.Client.WebParts;
+using System.Linq;
 using System.Reflection;
 using System.Security;
+using System.Text;
 using System.Threading;
+using System.Windows.Forms;
+using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Utilities;
+using Microsoft.SharePoint.Client.WebParts;
+using Squirrel;
+using File = System.IO.File;
+using Form = System.Windows.Forms.Form;
 
 namespace IssueCreator
 {
-    public partial class Issue : System.Windows.Forms.Form
+    public partial class Issue : Form
     {
-        private Configuration config;
-        private Connect connect;
-        private string[] extensions = new[] { ".jpg", ".jpeg", ".bmp", ".png" };
+        private Configuration _config;
+        private Connect _connect;
+        private string[] extensions = { ".jpg", ".jpeg", ".bmp", ".png" };
         private SecureString password = new SecureString();
-        private string profiles;
-        private string lastUsedProfile;
+        private string _profiles;
+        private string _lastUsedProfile;
 
-        private int maxImages;
-        private bool deleteOnUpload;
-        private bool WatchFolder;
+        private int _maxImages;
+        private bool _deleteOnUpload;
+        private bool _watchFolder;
 
         const string ProjectConfigFileName = "UserConfiguration.config";
 
@@ -41,89 +43,80 @@ namespace IssueCreator
         {
             notifyIconSQI.Visible = true;
 
-            //Setup the Description Textbox
-            //ModelText.ModelException.LogUnhandledException.enable(true);
-            //tooledControlDescription.addTools();
-            //modelEdit.toolContainer.onToolCommand = onToolCommand;
-            //modelEdit.openDocumentFragment("div", new StringReader("<div></div>"));
-            //CommandState saveButton = modelEdit.toolContainer.getCommandState(CommandInstance.commandSave);
-            //saveButton.visible = false;
-            //
-
             DirectoryInfo di = new DirectoryInfo(Assembly.GetEntryAssembly().Location);
-            string userConfigPath = di.Parent.Parent.FullName + "\\" + ProjectConfigFileName;
+            string userConfigPath = di.Parent?.Parent?.FullName + "\\" + ProjectConfigFileName;
 
             ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
             configMap.ExeConfigFilename = userConfigPath;
 
-            if (!System.IO.File.Exists(userConfigPath))
+            if (!File.Exists(userConfigPath))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
                 sb.AppendLine("<configuration>");
                 sb.AppendLine("</configuration>");
 
-                System.IO.File.WriteAllText(userConfigPath, sb.ToString());
+                File.WriteAllText(userConfigPath, sb.ToString());
             }
 
-            config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+            _config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
 
-            if (config.AppSettings.Settings["Password"] != null)
+            if (_config.AppSettings.Settings["Password"] != null)
             {
-                foreach (char letter in config.AppSettings.Settings["Password"].Value)
+                foreach (char letter in _config.AppSettings.Settings["Password"].Value)
                     password.AppendChar(letter);
             }
 
-            lastUsedProfile = config.AppSettings.Settings["LastUsedProfile"] == null ? "" : config.AppSettings.Settings["LastUsedProfile"].Value;
-            maxImages = config.AppSettings.Settings["MaxImages"] == null ? 16 : int.Parse(config.AppSettings.Settings["MaxImages"].Value);
-            deleteOnUpload = config.AppSettings.Settings["DeleteOnUpload"] == null ? false : bool.Parse(config.AppSettings.Settings["DeleteOnUpload"].Value);
-            WatchFolder = config.AppSettings.Settings["WatchFolder"] == null ? false : bool.Parse(config.AppSettings.Settings["WatchFolder"].Value);
-            profiles = config.AppSettings.Settings["Profiles"] == null ? "" : config.AppSettings.Settings["Profiles"].Value;
+            _lastUsedProfile = _config.AppSettings.Settings["LastUsedProfile"] == null ? "" : _config.AppSettings.Settings["LastUsedProfile"].Value;
+            _maxImages = _config.AppSettings.Settings["MaxImages"] == null ? 16 : int.Parse(_config.AppSettings.Settings["MaxImages"].Value);
+            _deleteOnUpload = _config.AppSettings.Settings["DeleteOnUpload"] != null && bool.Parse(_config.AppSettings.Settings["DeleteOnUpload"].Value);
+            _watchFolder = _config.AppSettings.Settings["WatchFolder"] != null && bool.Parse(_config.AppSettings.Settings["WatchFolder"].Value);
+            _profiles = _config.AppSettings.Settings["Profiles"] == null ? "" : _config.AppSettings.Settings["Profiles"].Value;
 
-            checkDelete.Checked = deleteOnUpload;
+            checkDelete.Checked = _deleteOnUpload;
 
-            connect = new Connect();
-            connect.profiles = profiles;
-            connect.lastUsedProfile = lastUsedProfile;
+            _connect = new Connect();
+            _connect.profiles = _profiles;
+            _connect.lastUsedProfile = _lastUsedProfile;
 
-            connect.ShowDialog();
+            _connect.ShowDialog();
 
-            if (!connect.connected)
+            if (!_connect.connected)
             {
                 Close();
                 return;
             }
 
-            profiles = connect.profiles;
-            lastUsedProfile = connect.lastUsedProfile;
-            this.Text = "Rapid Issue: " + connect.activeProfile.Name;
+            _profiles = _connect.profiles;
+            _lastUsedProfile = _connect.lastUsedProfile;
+            Text = @"Rapid Issue: " + _connect.activeProfile.Name;
 
-            AddUpdateConfiguration(config, "Profiles", profiles);
-            AddUpdateConfiguration(config, "LastUsedProfile", lastUsedProfile);
-            config.Save();
+            AddUpdateConfiguration(_config, "Profiles", _profiles);
+            AddUpdateConfiguration(_config, "LastUsedProfile", _lastUsedProfile);
+            _config.Save();
 
-            Uri spServer = new Uri(connect.activeProfile.SiteUrl);
-            linkIssuesList.Tag = spServer.Scheme + "://" + spServer.Host + connect.issuesList.DefaultViewUrl;
-            linkSite.Tag = connect.activeProfile.SiteUrl;
-            linkScreenshots.Tag = connect.activeProfile.Path;
+            Uri spServer = new Uri(_connect.activeProfile.SiteUrl);
+            linkIssuesList.Tag = spServer.Scheme + "://" + spServer.Host + _connect.issuesList.DefaultViewUrl;
+            linkSite.Tag = _connect.activeProfile.SiteUrl;
+            linkScreenshots.Tag = _connect.activeProfile.Path;
 
             PopulateDropdownFromField(comboCategory, "Category");
             PopulateDropdownFromField(comboPriority, "Priority");
             PopulateDropdownFromField(comboStatus, "Status");
             comboAssigned.DisplayMember = "Display";
-            PopulateUsersInAssignedTo(comboAssigned);
+            PopulateUsersInAssignedTo();
 
-            FileSystemWatcher FileSystemWatcher = new FileSystemWatcher();
-            FileSystemWatcher.Path = connect.activeProfile.Path;
-            FileSystemWatcher.IncludeSubdirectories = false;
-            FileSystemWatcher.NotifyFilter = NotifyFilters.FileName;
-            FileSystemWatcher.SynchronizingObject = this;
-            FileSystemWatcher.Filter = "*.*";
-            FileSystemWatcher.Created += FileSystemWatcher_Created;
-            FileSystemWatcher.Deleted += FileSystemWatcher_Deleted;
-            FileSystemWatcher.Changed += FileSystemWatcher_Changed;
-            FileSystemWatcher.Renamed += FileSystemWatcher_Renamed;
-            FileSystemWatcher.EnableRaisingEvents = true;
+            FileSystemWatcher fileSystemWatcher = new FileSystemWatcher();
+            fileSystemWatcher.Path = _connect.activeProfile.Path;
+            fileSystemWatcher.IncludeSubdirectories = false;
+            fileSystemWatcher.NotifyFilter = NotifyFilters.FileName;
+            fileSystemWatcher.SynchronizingObject = this;
+            fileSystemWatcher.Filter = "*.*";
+            fileSystemWatcher.Created += FileSystemWatcher_Created;
+            fileSystemWatcher.Deleted += FileSystemWatcher_Deleted;
+            fileSystemWatcher.Changed += FileSystemWatcher_Changed;
+            fileSystemWatcher.Renamed += FileSystemWatcher_Renamed;
+            fileSystemWatcher.EnableRaisingEvents = true;
 
             RefreshPictures();
 
@@ -134,12 +127,12 @@ namespace IssueCreator
 
         private void SetIssueListCustomisationEnabled()
         {
-            Microsoft.SharePoint.Client.File issuesDisplayForm = connect.issuesList.RootFolder.Files.GetByUrl("DispForm.aspx");
+            Microsoft.SharePoint.Client.File issuesDisplayForm = _connect.issuesList.RootFolder.Files.GetByUrl("DispForm.aspx");
             LimitedWebPartManager limitedWebPartManager = issuesDisplayForm.GetLimitedWebPartManager(PersonalizationScope.Shared);
-            connect.cc.Load(limitedWebPartManager,
+            _connect.cc.Load(limitedWebPartManager,
                                     wpm => wpm.WebParts,
                                     wpm => wpm.WebParts.Include(wp => wp.WebPart.Title));
-            connect.cc.ExecuteQuery();
+            _connect.cc.ExecuteQuery();
 
             foreach (WebPartDefinition wp in limitedWebPartManager.WebParts)
             {
@@ -148,8 +141,7 @@ namespace IssueCreator
                     linkConfigureIssueForm.Visible = false;
                     break;
                 }
-                else
-                    linkConfigureIssueForm.Visible = true;
+                linkConfigureIssueForm.Visible = true;
             }
         }
 
@@ -163,41 +155,42 @@ namespace IssueCreator
 
         protected override void OnClosed(EventArgs e)
         {
-            config.Save();
+            _config.Save();
             base.OnClosed(e);
         }
 
         private void PopulateDropdownFromField(ComboBox dropDown, string fieldTitle)
         {
-            connect.cc.Load(connect.issuesList.Fields);
-            connect.cc.ExecuteQuery();
-            foreach(Field field in connect.issuesList.Fields)
+            _connect.cc.Load(_connect.issuesList.Fields);
+            _connect.cc.ExecuteQuery();
+            foreach(Field field in _connect.issuesList.Fields)
             {
                 if (field.InternalName.ToLower() == fieldTitle.ToLower())
                 {
                     FieldChoice fc = field as FieldChoice;
-                    foreach (string choice in fc.Choices)
-                    {
-                        dropDown.Items.Add(choice);
-                    }
+                    if (fc != null)
+                        foreach (string choice in fc.Choices)
+                        {
+                            dropDown.Items.Add(choice);
+                        }
                     return;
                 }
             }
         }
 
-        private void PopulateUsersInAssignedTo(ComboBox dropDown)
+        private void PopulateUsersInAssignedTo()
         {
-            var siteUsers = from user in connect.uploadWeb.SiteUsers
-                            where user.PrincipalType == Microsoft.SharePoint.Client.Utilities.PrincipalType.User
+            var siteUsers = from user in _connect.uploadWeb.SiteUsers
+                            where user.PrincipalType == PrincipalType.User
                             select user;
-            var usersResult = connect.cc.LoadQuery(siteUsers);
-            connect.cc.ExecuteQuery();
+            var usersResult = _connect.cc.LoadQuery(siteUsers);
+            _connect.cc.ExecuteQuery();
 
             foreach (var user in usersResult)
             {
                 AssignedTo at = new AssignedTo();
                 at.Email = user.Email;
-                at.ID = user.Id;
+                at.Id = user.Id;
                 at.Name = user.Title;
                 comboAssigned.Items.Add(at);
             }
@@ -234,7 +227,7 @@ namespace IssueCreator
 
             RefreshPictures();
 
-            if (WatchFolder)
+            if (_watchFolder)
             {
                 WindowState = FormWindowState.Normal;
                 Show();
@@ -246,12 +239,12 @@ namespace IssueCreator
             Thread.Sleep(400);
             flowPictureLayout.Controls.Clear();
 
-            DirectoryInfo di = new DirectoryInfo(connect.activeProfile.Path);
+            DirectoryInfo di = new DirectoryInfo(_connect.activeProfile.Path);
             FileInfo[] files = di.GetFiles()
                      .Where(f => extensions.Contains(f.Extension.ToLower()))
                      .OrderBy(f => f.CreationTimeUtc)
                      .Reverse()
-                     .Take(maxImages)
+                     .Take(_maxImages)
                      .ToArray();
 
             int count = 0;
@@ -261,7 +254,7 @@ namespace IssueCreator
                 PictureBoxDisplay pbd = new PictureBoxDisplay();
                 pbd.Filename = file.Name;
                 pbd.ImageLocation = file.FullName;
-                pbd.Enlarge += new EventHandler(picture_Click);
+                pbd.Enlarge += picture_Click;
                 if (count == 1) pbd.Checked = true;
                 flowPictureLayout.Controls.Add(pbd);
             }
@@ -272,7 +265,7 @@ namespace IssueCreator
         {
             if (string.IsNullOrEmpty(textTitle.Text))
             {
-                MessageBox.Show("Title field cannot be empty.", "No Title", MessageBoxButtons.OK);
+                MessageBox.Show(@"Title field cannot be empty.", @"No Title", MessageBoxButtons.OK);
                 return;    
             }
 
@@ -288,14 +281,14 @@ namespace IssueCreator
 
             if(!atLeastOnePicture)
             {
-                DialogResult saveWithoutPitcure = MessageBox.Show("Do you wish to create an image without uploading a screenshot?", "Screenshot not selected", MessageBoxButtons.YesNo);
+                DialogResult saveWithoutPitcure = MessageBox.Show(@"Title field cannot be empty.", @"Screenshot not selected", MessageBoxButtons.YesNo);
                 if (saveWithoutPitcure == DialogResult.No)
                     return;
             }
 
             ListItemCreationInformation lic = new ListItemCreationInformation();
 
-            ListItem li = connect.issuesList.AddItem(lic);
+            ListItem li = _connect.issuesList.AddItem(lic);
             li["Title"] = textTitle.Text;
 
             //StringWriter sw = new StringWriter();
@@ -310,11 +303,11 @@ namespace IssueCreator
             {
                 FieldUserValue uv = new FieldUserValue();
                 AssignedTo selected = (AssignedTo)comboAssigned.SelectedItem;
-                uv.LookupId = selected.ID;
+                uv.LookupId = selected.Id;
                 li["AssignedTo"] = uv;
             }
             li.Update();
-            connect.cc.ExecuteQuery();
+            _connect.cc.ExecuteQuery();
 
             Dictionary<string, string> pictures = new Dictionary<string, string>();
             foreach (PictureBoxDisplay picture in flowPictureLayout.Controls)
@@ -337,13 +330,13 @@ namespace IssueCreator
             {
                 AttachmentCreationInformation aci = new AttachmentCreationInformation();
                 aci.FileName = pictures.Key;
-                aci.ContentStream = new MemoryStream(System.IO.File.ReadAllBytes(pictures.Value));
+                aci.ContentStream = new MemoryStream(File.ReadAllBytes(pictures.Value));
 
                 Attachment att = li.AttachmentFiles.Add(aci);
-                connect.cc.Load(att);
-                connect.cc.ExecuteQuery();
+                _connect.cc.Load(att);
+                _connect.cc.ExecuteQuery();
 
-                if (deleteOnUpload)
+                if (_deleteOnUpload)
                 {
                     FileInfo fi = new FileInfo(pictures.Value);
                     fi.Delete();
@@ -364,16 +357,11 @@ namespace IssueCreator
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            string description;
-            //StringWriter sw = new StringWriter();
-            //modelEdit.save(sw, XmlHeaderType.None);
-            //description = sw.ToString();
-
             if (textTitle.Text != "" || richTextBoxDescription.Text != "" ||
                 comboCategory.Text != "" || comboPriority.Text != "" ||  comboStatus.Text != "" ||
                 textComment.Text != "" || comboAssigned.SelectedItem != null)
             {
-                DialogResult result = MessageBox.Show("Are you sure you want to discard the issue? If not, click 'No' and minimise the form instead.", "Discard issue?", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show(@"Title field cannot be empty.", @"Discard issue?", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                     return;
             }
@@ -387,7 +375,7 @@ namespace IssueCreator
             PictureBoxDisplay pic = sender as PictureBoxDisplay;
 
             pictureboxEnlarge ep = new pictureboxEnlarge();
-            ep.picturePath = pic.ImageLocation;
+            ep.picturePath = pic?.ImageLocation;
             ep.Show();
         }
 
@@ -405,23 +393,23 @@ namespace IssueCreator
 
         private void linkIssuesList_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(linkIssuesList.Tag.ToString());
+            Process.Start(linkIssuesList.Tag.ToString());
         }
 
         private void linkSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(linkSite.Tag.ToString());
+            Process.Start(linkSite.Tag.ToString());
         }
 
         private void linkScreenshots_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(linkScreenshots.Tag.ToString());
+            Process.Start(linkScreenshots.Tag.ToString());
         }
 
         private void checkDelete_CheckedChanged(object sender, EventArgs e)
         {
-            AddUpdateConfiguration(config, "DeleteOnUpload", checkDelete.Checked.ToString());
-            deleteOnUpload = checkDelete.Checked;
+            AddUpdateConfiguration(_config, "DeleteOnUpload", checkDelete.Checked.ToString());
+            _deleteOnUpload = checkDelete.Checked;
         }
 
 
@@ -465,32 +453,30 @@ namespace IssueCreator
                     var upgrade = await mgr.CheckForUpdate();
                     if (upgrade.ReleasesToApply.Any())
                     {
-                        linkUpgrade.Text = "New version released. Upgrading...";
+                        linkUpgrade.Text = @"New version released. Upgrading...";
                         linkUpgrade.Enabled = false;
                         linkUpgrade.LinkBehavior = LinkBehavior.NeverUnderline;
                     }
                     else
                     {
-                        linkUpgrade.Text = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                        linkUpgrade.Text = @"Version: " + Assembly.GetExecutingAssembly().GetName().Version;
                         linkUpgrade.Enabled = false;
                         linkUpgrade.LinkBehavior = LinkBehavior.NeverUnderline;
                         return;
                     }
 
 
-                    var release = await mgr.UpdateApp();
+                    await mgr.UpdateApp();
 
-                    linkUpgrade.Text = "Upgraded - Click to restart";
+                    linkUpgrade.Text = @"Upgraded - Click to restart";
                     linkUpgrade.Enabled = true;
                     linkUpgrade.LinkBehavior = LinkBehavior.HoverUnderline;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                string message = ex.Message + Environment.NewLine;
-                if (ex.InnerException != null)
-                    message += ex.InnerException.Message;
-                MessageBox.Show(message);
+                linkUpgrade.Text = @"Version Check Failed";
+                linkUpgrade.Enabled = false;
             }
         }
 
@@ -499,7 +485,7 @@ namespace IssueCreator
         {
             public string Name { get; set; }
             public string Email { get; set; }
-            public int ID { get; set; }
+            public int Id { get; set; }
 
             public string Display
             {
@@ -515,23 +501,23 @@ namespace IssueCreator
 
         private void linkConfigureIssueForm_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            DialogResult result = MessageBox.Show("This command will replace the default Issue display form with one that can display screenshots next to the issue description. Do you wish to continue?", "Replace default Issue Display form?", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show(@"Title field cannot be empty.", @"Replace default Issue Display form?", MessageBoxButtons.YesNo);
 
             if (result == DialogResult.No)
                 return;
 
-            string fileUrl = connect.issuesList.RootFolder.ServerRelativeUrl + "/DispForm.aspx";
-            Microsoft.SharePoint.Client.File issuesDisplayForm = connect.uploadWeb.GetFileByUrl(fileUrl);
+            string fileUrl = _connect.issuesList.RootFolder.ServerRelativeUrl + "/DispForm.aspx";
+            Microsoft.SharePoint.Client.File issuesDisplayForm = _connect.uploadWeb.GetFileByUrl(fileUrl);
             LimitedWebPartManager limitedWebPartManager = issuesDisplayForm.GetLimitedWebPartManager(PersonalizationScope.Shared);
-            connect.cc.Load(limitedWebPartManager.WebParts);
-            connect.cc.ExecuteQuery();
+            _connect.cc.Load(limitedWebPartManager.WebParts);
+            _connect.cc.ExecuteQuery();
 
-            string webPartFileDefinition = System.IO.File.ReadAllText("screenshots.webpart");
+            string webPartFileDefinition = File.ReadAllText("screenshots.webpart");
             WebPartDefinition webPartImported = limitedWebPartManager.ImportWebPart(webPartFileDefinition);
 
             WebPartDefinition webPart = limitedWebPartManager.AddWebPart(webPartImported.WebPart, "Main", 0);
-            connect.cc.Load(webPart, d => d.Id);
-            connect.cc.ExecuteQuery();
+            _connect.cc.Load(webPart, d => d.Id);
+            _connect.cc.ExecuteQuery();
             linkConfigureIssueForm.Visible = false;
         }
 
