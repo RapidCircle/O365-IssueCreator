@@ -281,7 +281,7 @@ namespace IssueCreator
 
             if(!atLeastOnePicture)
             {
-                DialogResult saveWithoutPitcure = MessageBox.Show(@"Title field cannot be empty.", @"Screenshot not selected", MessageBoxButtons.YesNo);
+                DialogResult saveWithoutPitcure = MessageBox.Show(@"Do you want to create an issue without and associated image?", @"No screenshot selected", MessageBoxButtons.YesNo);
                 if (saveWithoutPitcure == DialogResult.No)
                     return;
             }
